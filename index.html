@@ -1,1 +1,566 @@
-test
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copycat Code Defender - OSS Compliance & License Detection Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            margin-left: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        
+        .workflow {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .workflow h2 {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .pipeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .pipeline-step {
+            flex: 1;
+            min-width: 140px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .pipeline-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 35%;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+        
+        .step-desc {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        
+        .components {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .components h2 {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .component-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: var(--primary);
+        }
+        
+        .component-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .component-name {
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .component-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-ready {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .status-development {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .component-desc {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        
+        .component-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .component-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .component-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .cta {
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: white;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .pipeline-step:not(:last-child)::after {
+                display: none;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                🛡️ <span>Copycat Code Defender</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#workflow">Workflow</a></li>
+                <li><a href="#components">Components</a></li>
+                <li><a href="https://github.com/oscarvalenzuelab/copycatcodedefender.com">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>🛡️ Copycat Code Defender</h1>
+            <p class="subtitle">Comprehensive code similarity detection and license compliance platform</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">28.6%</div>
+                    <div class="stat-label">Project Complete</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Components</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Ready</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">In Development</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="workflow" class="container">
+        <div class="workflow">
+            <h2>🔄 Analysis Workflow</h2>
+            <div class="pipeline">
+                <div class="pipeline-step">
+                    <div class="step-icon">📦</div>
+                    <div class="step-title">Submit PURL</div>
+                    <div class="step-desc">Package URL input</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">⬇️</div>
+                    <div class="step-title">Download</div>
+                    <div class="step-desc">Source retrieval</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">🔍</div>
+                    <div class="step-title">Analyze</div>
+                    <div class="step-desc">Pattern extraction</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">🔬</div>
+                    <div class="step-title">Scan Binaries</div>
+                    <div class="step-desc">Hidden OSS detection</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">📜</div>
+                    <div class="step-title">Detect License</div>
+                    <div class="step-desc">Classification</div>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-icon">📄</div>
+                    <div class="step-title">Generate Notice</div>
+                    <div class="step-desc">Legal documents</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="components" class="container">
+        <div class="components">
+            <h2>🎯 Component Status</h2>
+            <div class="component-grid">
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">Frontend UI</span>
+                        <span class="component-status status-development">In Dev</span>
+                    </div>
+                    <p class="component-desc">Web interface for scan submission and results visualization</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <small>Version: 0.0.0</small>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">Backend API</span>
+                        <span class="component-status status-development">In Dev</span>
+                    </div>
+                    <p class="component-desc">Core API services with scan queue management</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <small>Version: 0.0.0</small>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">PURL to Source</span>
+                        <span class="component-status status-ready">Ready</span>
+                    </div>
+                    <p class="component-desc">Downloads source code from Package URLs</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%"></div>
+                    </div>
+                    <small>Version: 0.1.1</small>
+                    <div class="component-links">
+                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2src">🔗 GitHub</a>
+                        <a href="https://pypi.org/project/semantic-copycat-purl2src/">📦 PyPI</a>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">Code Miner</span>
+                        <span class="component-status status-development">In Dev</span>
+                    </div>
+                    <p class="component-desc">Extracts code patterns and initial license detection</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <small>Version: 0.0.0</small>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">Binary Sniffer</span>
+                        <span class="component-status status-ready">Ready</span>
+                    </div>
+                    <p class="component-desc">Identifies hidden OSS in binary files</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 10%"></div>
+                    </div>
+                    <small>Version: 1.8.4</small>
+                    <div class="component-links">
+                        <a href="https://pypi.org/project/semantic-copycat-binarysniffer/">📦 PyPI</a>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">LiLY Inspector</span>
+                        <span class="component-status status-development">In Dev</span>
+                    </div>
+                    <p class="component-desc">Advanced license detection and classification</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <small>Version: 0.0.0</small>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">PURL to Notice</span>
+                        <span class="component-status status-development">In Dev</span>
+                    </div>
+                    <p class="component-desc">Generates legal notices with licenses</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <small>Version: 0.0.0</small>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta container">
+        <a href="https://github.com/oscarvalenzuelab/copycatcodedefender.com" class="btn btn-primary">
+            View on GitHub →
+        </a>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 Copycat Code Defender Project</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+        
+        // Animate progress bars on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.width = entry.target.getAttribute('data-width') || '0%';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.progress-fill').forEach(bar => {
+            observer.observe(bar);
+        });
+    </script>
+</body>
+</html>
