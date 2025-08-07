@@ -4,3 +4,7 @@
 # This file can be edited through GitHub web UI to avoid local conflicts
 
 # Add your forbidden words below:
+password
+amazon
+gpg
+claude
