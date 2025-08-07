@@ -164,10 +164,12 @@ def update_readme():
         {
             'name': 'Code Miner',
             'component_id': 'semantic-copycat-miner',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-miner',
-            'pypi': 'semantic-copycat-miner',
+            'github': None,  # Private repository
+            'pypi': None,  # Not published to PyPI
             'description': 'Extracts code patterns and performs initial license detection',
-            'category': 'Analysis Pipeline'
+            'category': 'Analysis Pipeline',
+            'status_override': 'complete',  # Manually set as complete
+            'version_override': '1.0.0'  # Manually set version
         },
         {
             'name': 'Binary Sniffer',
@@ -209,13 +211,14 @@ def update_readme():
             'category': component.get('category', 'Core'),
             'github_exists': False,
             'pypi_exists': False,
-            'version': '0.0.0',
+            'version': component.get('version_override', '0.0.0'),
             'open_issues': 0,
             'closed_issues': 0,
             'total_issues': 0,
             'completion': 0.0,
             'github_url': component.get('github', ''),
-            'pypi_url': f"https://pypi.org/project/{component['pypi']}/" if component.get('pypi') else None
+            'pypi_url': f"https://pypi.org/project/{component['pypi']}/" if component.get('pypi') else None,
+            'status_override': component.get('status_override', None)
         }
         
         # Fetch GitHub stats
@@ -234,8 +237,11 @@ def update_readme():
                     # Calculate completion
                     if stats['total_issues'] > 0:
                         stats['completion'] = calculate_completion(stats['closed_issues'], stats['total_issues'])
+                    elif stats['github_exists'] and stats['version'] != '0.0.0':
+                        # If repo exists with a release version but no issues, it's likely complete
+                        stats['completion'] = 100.0
                     elif stats['github_exists']:
-                        # If repo exists but no issues, consider it as initial stage
+                        # If repo exists but no version/issues yet, consider it as initial stage
                         stats['completion'] = 10.0
                     
                     total_open += stats['open_issues']
@@ -248,9 +254,17 @@ def update_readme():
                 stats['pypi_exists'] = pypi_stats.get('exists', False)
                 if pypi_stats.get('version', '0.0.0') != '0.0.0':
                     stats['version'] = pypi_stats['version']
+                    # If package exists on PyPI with a version, consider it complete
+                    if stats['completion'] == 0.0 and stats['pypi_exists']:
+                        stats['completion'] = 100.0
         
-        # Count ready components (version > 0.0.0 or exists)
-        if stats['version'] != '0.0.0' or stats['github_exists']:
+        # Handle manual status overrides for private/complete components
+        if stats['status_override'] == 'complete':
+            stats['completion'] = 100.0
+            stats['github_exists'] = True  # Mark as existing even if private
+        
+        # Count ready components (version > 0.0.0 or exists or marked complete)
+        if stats['version'] != '0.0.0' or stats['github_exists'] or stats['status_override'] == 'complete':
             total_components_ready += 1
         
         component_stats.append(stats)
@@ -323,7 +337,9 @@ graph LR
         progress_bar = get_progress_bar(stats['completion'], 10)
         
         links = []
-        if stats['github_url']:
+        if stats.get('status_override') == 'complete' and not stats['github_url']:
+            links.append("Private Repo")
+        elif stats['github_url']:
             if stats['github_exists']:
                 links.append(f"[GitHub]({stats['github_url']})")
             else:
