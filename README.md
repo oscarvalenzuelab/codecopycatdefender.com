@@ -43,13 +43,13 @@ graph LR
 
 ## 🎯 Component Status Dashboard
 
-*Last updated: 2025-08-07 06:35:25 UTC*
+*Last updated: 2025-08-07 06:35:49 UTC*
 
 | Component | Version | Status | Progress | Open Tickets | Links |
 |-----------|---------|--------|----------|--------------|-------|
 | **Frontend UI**<br/>*Web interface for scan submission and results visualization* | 0.0.0 | 🚧 | ░░░░░░░░░░ 0% | - | GitHub (planned) |
 | **Backend API**<br/>*Core API services with scan queue management and orchestration* | 0.0.0 | 🚧 | ░░░░░░░░░░ 0% | - | GitHub (planned) |
-| **PURL to Source**<br/>*Downloads source code from Package URLs (npm, PyPI, Maven, etc.)* | 0.1.1 | ✅ | ██████████ 100% | - | [GitHub](https://github.com/oscarvalenzuelab/semantic-copycat-purl2src) · [PyPI](https://pypi.org/project/semantic-copycat-purl2src/) |
+| **PURL to Source**<br/>*Downloads source code from Package URLs (npm, PyPI, Maven, etc.)* | 0.1.1 | ✅ | ██████████ 100% | - | GitHub (planned) · [PyPI](https://pypi.org/project/semantic-copycat-purl2src/) |
 | **Code Miner**<br/>*Extracts code patterns and performs initial license detection* | 1.7.0 | ✅ | ██████████ 100% | - | Private Repo |
 | **Binary Sniffer**<br/>*Identifies hidden OSS components embedded in binary files* | 1.8.4 | ✅ | ██████████ 100% | - | GitHub (planned) · [PyPI](https://pypi.org/project/semantic-copycat-binarysniffer/) |
 | **LiLY Inspector**<br/>*Advanced license detection and classification engine* | 0.0.0 | 🚧 | ░░░░░░░░░░ 0% | - | GitHub (planned) |
