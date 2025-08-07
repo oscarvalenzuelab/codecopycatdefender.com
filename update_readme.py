@@ -138,46 +138,60 @@ def update_readme():
     # Define all components of Copycat Code Defender
     components = [
         {
-            'name': 'Backend API',
-            'component_id': 'semantic-copycat-backend',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-backend',
-            'pypi': None,
-            'description': 'Core API services and business logic'
-        },
-        {
             'name': 'Frontend UI',
             'component_id': 'semantic-copycat-frontend',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-frontend',
             'pypi': None,
-            'description': 'Web interface and user experience'
+            'description': 'Web interface for scan submission and results visualization',
+            'category': 'Web Platform'
+        },
+        {
+            'name': 'Backend API',
+            'component_id': 'semantic-copycat-backend',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-backend',
+            'pypi': None,
+            'description': 'Core API services with scan queue management and orchestration',
+            'category': 'Web Platform'
         },
         {
             'name': 'PURL to Source',
             'component_id': 'semantic-copycat-purl2src',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2src',
             'pypi': 'semantic-copycat-purl2src',
-            'description': 'Package URL to source code resolver'
+            'description': 'Downloads source code from Package URLs (npm, PyPI, Maven, etc.)',
+            'category': 'Analysis Pipeline'
         },
         {
             'name': 'Code Miner',
             'component_id': 'semantic-copycat-miner',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-miner',
             'pypi': 'semantic-copycat-miner',
-            'description': 'Code analysis and mining engine'
+            'description': 'Extracts code patterns and performs initial license detection',
+            'category': 'Analysis Pipeline'
         },
         {
-            'name': 'License Inspector',
-            'component_id': 'semantic-copycat-lili',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-lili',
+            'name': 'Binary Sniffer',
+            'component_id': 'semantic-copycat-binarysniffer',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer',
+            'pypi': 'semantic-copycat-binarysniffer',
+            'description': 'Identifies hidden OSS components embedded in binary files',
+            'category': 'Analysis Pipeline'
+        },
+        {
+            'name': 'LiLY Inspector',
+            'component_id': 'semantic-copycat-lily',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-lily',
             'pypi': None,
-            'description': 'License detection and compliance'
+            'description': 'Advanced license detection and classification engine',
+            'category': 'License Analysis'
         },
         {
             'name': 'PURL to Notice',
             'component_id': 'semantic-copycat-purl2notice',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice',
             'pypi': None,
-            'description': 'Generate license notices from PURLs'
+            'description': 'Generates legal notices with licenses and copyright information',
+            'category': 'License Analysis'
         }
     ]
     
@@ -192,6 +206,7 @@ def update_readme():
             'name': component['name'],
             'component_id': component['component_id'],
             'description': component['description'],
+            'category': component.get('category', 'Core'),
             'github_exists': False,
             'pypi_exists': False,
             'version': '0.0.0',
@@ -262,6 +277,31 @@ def update_readme():
 
 ---
 
+## 🔄 Analysis Workflow
+
+The platform orchestrates a comprehensive analysis pipeline:
+
+```mermaid
+graph LR
+    A[User submits PURL] --> B[Backend Queue]
+    B --> C[PURL2Src<br/>Download Source]
+    C --> D[Code Miner<br/>Extract Patterns]
+    C --> E[Binary Sniffer<br/>Scan Binaries]
+    D --> F[LiLY<br/>License Detection]
+    E --> F
+    F --> G[PURL2Notice<br/>Generate Legal Docs]
+    G --> H[Results to Frontend]
+```
+
+1. **User Input**: Submit Package URL through web interface
+2. **Source Retrieval**: Download complete source code
+3. **Pattern Analysis**: Extract code patterns and signatures
+4. **Binary Scanning**: Identify hidden OSS in compiled files
+5. **License Detection**: Classify and validate licenses
+6. **Notice Generation**: Create comprehensive legal documentation
+
+---
+
 ## 🎯 Component Status Dashboard
 
 *Last updated: {} UTC*
@@ -314,21 +354,33 @@ def update_readme():
 
 """
     
+    # Group components by category
+    categories = {}
     for stats in component_stats:
-        status_emoji = get_status_badge(stats['completion'])
-        readme_content += f"### {status_emoji} {stats['name']} (`{stats['component_id']}`)\n\n"
-        readme_content += f"> {stats['description']}\n\n"
-        
-        if stats['github_exists'] or stats['pypi_exists']:
-            readme_content += "| Metric | Value |\n"
-            readme_content += "|--------|-------|\n"
-            readme_content += f"| **Current Version** | {stats['version']} |\n"
-            readme_content += f"| **Completion** | {stats['completion']:.1f}% |\n"
-            readme_content += f"| **Open Issues** | {stats['open_issues']} |\n"
-            readme_content += f"| **Closed Issues** | {stats['closed_issues']} |\n"
-            readme_content += f"| **Total Issues** | {stats['total_issues']} |\n\n"
-        else:
-            readme_content += "*Component not yet initialized*\n\n"
+        category = stats.get('category', 'Core')
+        if category not in categories:
+            categories[category] = []
+        categories[category].append(stats)
+    
+    # Display components grouped by category
+    for category in ['Web Platform', 'Analysis Pipeline', 'License Analysis']:
+        if category in categories:
+            readme_content += f"### 🏗️ {category}\n\n"
+            for stats in categories[category]:
+                status_emoji = get_status_badge(stats['completion'])
+                readme_content += f"#### {status_emoji} {stats['name']} (`{stats['component_id']}`)\n\n"
+                readme_content += f"> {stats['description']}\n\n"
+                
+                if stats['github_exists'] or stats['pypi_exists']:
+                    readme_content += "| Metric | Value |\n"
+                    readme_content += "|--------|-------|\n"
+                    readme_content += f"| **Current Version** | {stats['version']} |\n"
+                    readme_content += f"| **Completion** | {stats['completion']:.1f}% |\n"
+                    readme_content += f"| **Open Issues** | {stats['open_issues']} |\n"
+                    readme_content += f"| **Closed Issues** | {stats['closed_issues']} |\n"
+                    readme_content += f"| **Total Issues** | {stats['total_issues']} |\n\n"
+                else:
+                    readme_content += "*Component not yet initialized*\n\n"
     
     # Add summary statistics
     total_issues = total_open + total_closed
