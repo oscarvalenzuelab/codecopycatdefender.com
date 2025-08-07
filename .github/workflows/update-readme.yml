@@ -1,0 +1,51 @@
+name: Update README Stats
+
+on:
+  schedule:
+    # Run daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # Allow manual trigger
+  push:
+    branches:
+      - main
+    paths:
+      - 'update_readme.py'
+      - '.github/workflows/update-readme.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Update README with latest stats
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        python update_readme.py
+    
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        git diff --exit-code README.md || echo "changed=true" >> $GITHUB_OUTPUT
+    
+    - name: Commit and push if changed
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add README.md
+        git commit -m "🤖 Update README with latest project statistics"
+        git push
