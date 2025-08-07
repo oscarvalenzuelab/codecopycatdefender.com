@@ -169,7 +169,7 @@ def update_readme():
             'description': 'Extracts code patterns and performs initial license detection',
             'category': 'Analysis Pipeline',
             'status_override': 'complete',  # Manually set as complete
-            'version_override': '1.0.0'  # Manually set version
+            'version_override': '1.7.0'  # Manually set version
         },
         {
             'name': 'Binary Sniffer',
