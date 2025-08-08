@@ -199,9 +199,7 @@ def update_readme():
             'pypi': None,
             'description': 'Agentic analysis framework for intelligent code pattern detection',
             'category': 'Analysis Pipeline',
-            'license': 'Apache-2.0',
-            'status_override': 'functional',  # Project is functional despite open issues
-            'completion_override': 85.0  # Manual override based on actual functionality
+            'license': 'Apache-2.0'
         },
         {
             'name': 'LiLY Inspector',
@@ -219,7 +217,9 @@ def update_readme():
             'pypi': None,
             'description': 'Generates legal notices with licenses and copyright information',
             'category': 'License Analysis',
-            'license': 'MIT'
+            'license': 'MIT',
+            'status_override': 'complete',  # Mark as complete
+            'completion_override': 100.0  # 100% complete
         }
     ]
     
@@ -289,7 +289,8 @@ def update_readme():
         
         # Handle manual status overrides for private/complete/functional components
         if stats['status_override'] == 'complete':
-            stats['completion'] = 100.0
+            # Use completion_override if specified, otherwise 100%
+            stats['completion'] = component.get('completion_override', 100.0)
             stats['github_exists'] = True  # Mark as existing even if private
         elif stats['status_override'] == 'functional':
             # Use completion_override if specified, otherwise default to 80%
