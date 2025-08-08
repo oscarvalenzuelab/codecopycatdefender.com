@@ -365,19 +365,19 @@
             
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">28.6%</div>
+                    <div class="stat-number">50.0%</div>
                     <div class="stat-label">Project Complete</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">7</div>
+                    <div class="stat-number">8</div>
                     <div class="stat-label">Components</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">2</div>
+                    <div class="stat-number">4</div>
                     <div class="stat-label">Ready</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">5</div>
+                    <div class="stat-number">4</div>
                     <div class="stat-label">In Development</div>
                 </div>
             </div>
@@ -409,6 +409,11 @@
                     <div class="step-desc">Hidden OSS detection</div>
                 </div>
                 <div class="pipeline-step">
+                    <div class="step-icon">🤖</div>
+                    <div class="step-title">Agentic Framework</div>
+                    <div class="step-desc">Intelligent analysis</div>
+                </div>
+                <div class="pipeline-step">
                     <div class="step-icon">📜</div>
                     <div class="step-title">Detect License</div>
                     <div class="step-desc">Classification</div>
@@ -435,7 +440,7 @@
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 0%"></div>
                     </div>
-                    <small>Version: 0.0.0</small>
+                    <small>Version: 0.0.0 | License: MIT</small>
                 </div>
                 
                 <div class="component-card">
@@ -443,11 +448,11 @@
                         <span class="component-name">Backend API</span>
                         <span class="component-status status-development">In Dev</span>
                     </div>
-                    <p class="component-desc">Core API services with scan queue management</p>
+                    <p class="component-desc">Core API services with scan queue management and orchestration</p>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 0%"></div>
                     </div>
-                    <small>Version: 0.0.0</small>
+                    <small>Version: 0.0.0 | License: MIT</small>
                 </div>
                 
                 <div class="component-card">
@@ -455,11 +460,11 @@
                         <span class="component-name">PURL to Source</span>
                         <span class="component-status status-ready">Ready</span>
                     </div>
-                    <p class="component-desc">Downloads source code from Package URLs</p>
+                    <p class="component-desc">Downloads source code from Package URLs (npm, PyPI, Maven, etc.)</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 10%"></div>
+                        <div class="progress-fill" style="width: 100%"></div>
                     </div>
-                    <small>Version: 0.1.1</small>
+                    <small>Version: 0.1.1 | License: MIT</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2src">🔗 GitHub</a>
                         <a href="https://pypi.org/project/semantic-copycat-purl2src/">📦 PyPI</a>
@@ -469,13 +474,16 @@
                 <div class="component-card">
                     <div class="component-header">
                         <span class="component-name">Code Miner</span>
-                        <span class="component-status status-development">In Dev</span>
+                        <span class="component-status status-ready">Ready</span>
                     </div>
-                    <p class="component-desc">Extracts code patterns and initial license detection</p>
+                    <p class="component-desc">Extracts code patterns and performs initial license detection</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
+                        <div class="progress-fill" style="width: 100%"></div>
                     </div>
-                    <small>Version: 0.0.0</small>
+                    <small>Version: 1.7.0 | License: Proprietary</small>
+                    <div class="component-links">
+                        <span>🔒 Private Repository</span>
+                    </div>
                 </div>
                 
                 <div class="component-card">
@@ -483,13 +491,28 @@
                         <span class="component-name">Binary Sniffer</span>
                         <span class="component-status status-ready">Ready</span>
                     </div>
-                    <p class="component-desc">Identifies hidden OSS in binary files</p>
+                    <p class="component-desc">Identifies hidden OSS components embedded in binary files</p>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: 10%"></div>
+                        <div class="progress-fill" style="width: 100%"></div>
                     </div>
-                    <small>Version: 1.8.4</small>
+                    <small>Version: 1.8.7 | License: MIT</small>
                     <div class="component-links">
                         <a href="https://pypi.org/project/semantic-copycat-binarysniffer/">📦 PyPI</a>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-header">
+                        <span class="component-name">Open Agentic Framework</span>
+                        <span class="component-status status-development">In Dev</span>
+                    </div>
+                    <p class="component-desc">Agentic analysis framework for intelligent code pattern detection</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <small>Version: 0.0.0 | License: Apache-2.0</small>
+                    <div class="component-links">
+                        <a href="https://github.com/oscarvalenzuelab/open_agentic_framework">🔗 GitHub</a>
                     </div>
                 </div>
                 
@@ -498,11 +521,11 @@
                         <span class="component-name">LiLY Inspector</span>
                         <span class="component-status status-development">In Dev</span>
                     </div>
-                    <p class="component-desc">Advanced license detection and classification</p>
+                    <p class="component-desc">Advanced license detection and classification engine</p>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 0%"></div>
                     </div>
-                    <small>Version: 0.0.0</small>
+                    <small>Version: 0.0.0 | License: MIT</small>
                 </div>
                 
                 <div class="component-card">
@@ -510,11 +533,11 @@
                         <span class="component-name">PURL to Notice</span>
                         <span class="component-status status-development">In Dev</span>
                     </div>
-                    <p class="component-desc">Generates legal notices with licenses</p>
+                    <p class="component-desc">Generates legal notices with licenses and copyright information</p>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 0%"></div>
                     </div>
-                    <small>Version: 0.0.0</small>
+                    <small>Version: 0.0.0 | License: MIT</small>
                 </div>
             </div>
         </div>

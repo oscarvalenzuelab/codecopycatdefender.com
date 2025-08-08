@@ -143,7 +143,8 @@ def update_readme():
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-frontend',
             'pypi': None,
             'description': 'Web interface for scan submission and results visualization',
-            'category': 'Web Platform'
+            'category': 'Web Platform',
+            'license': 'MIT'
         },
         {
             'name': 'Backend API',
@@ -151,7 +152,8 @@ def update_readme():
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-backend',
             'pypi': None,
             'description': 'Core API services with scan queue management and orchestration',
-            'category': 'Web Platform'
+            'category': 'Web Platform',
+            'license': 'MIT'
         },
         {
             'name': 'PURL to Source',
@@ -159,7 +161,8 @@ def update_readme():
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2src',
             'pypi': 'semantic-copycat-purl2src',
             'description': 'Downloads source code from Package URLs (npm, PyPI, Maven, etc.)',
-            'category': 'Analysis Pipeline'
+            'category': 'Analysis Pipeline',
+            'license': 'MIT'
         },
         {
             'name': 'Code Miner',
@@ -169,7 +172,8 @@ def update_readme():
             'description': 'Extracts code patterns and performs initial license detection',
             'category': 'Analysis Pipeline',
             'status_override': 'complete',  # Manually set as complete
-            'version_override': '1.7.0'  # Manually set version
+            'version_override': '1.7.0',  # Manually set version
+            'license': 'Proprietary'
         },
         {
             'name': 'Binary Sniffer',
@@ -177,7 +181,17 @@ def update_readme():
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer',
             'pypi': 'semantic-copycat-binarysniffer',
             'description': 'Identifies hidden OSS components embedded in binary files',
-            'category': 'Analysis Pipeline'
+            'category': 'Analysis Pipeline',
+            'license': 'MIT'
+        },
+        {
+            'name': 'Open Agentic Framework',
+            'component_id': 'open-agentic-framework',
+            'github': 'https://github.com/oscarvalenzuelab/open_agentic_framework',
+            'pypi': None,
+            'description': 'Agentic analysis framework for intelligent code pattern detection',
+            'category': 'Analysis Pipeline',
+            'license': 'Apache-2.0'
         },
         {
             'name': 'LiLY Inspector',
@@ -185,7 +199,8 @@ def update_readme():
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-lily',
             'pypi': None,
             'description': 'Advanced license detection and classification engine',
-            'category': 'License Analysis'
+            'category': 'License Analysis',
+            'license': 'MIT'
         },
         {
             'name': 'PURL to Notice',
@@ -193,7 +208,8 @@ def update_readme():
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice',
             'pypi': None,
             'description': 'Generates legal notices with licenses and copyright information',
-            'category': 'License Analysis'
+            'category': 'License Analysis',
+            'license': 'MIT'
         }
     ]
     
@@ -209,6 +225,7 @@ def update_readme():
             'component_id': component['component_id'],
             'description': component['description'],
             'category': component.get('category', 'Core'),
+            'license': component.get('license', 'TBD'),
             'github_exists': False,
             'pypi_exists': False,
             'version': component.get('version_override', '0.0.0'),
@@ -301,18 +318,21 @@ graph LR
     B --> C[PURL2Src<br/>Download Source]
     C --> D[Code Miner<br/>Extract Patterns]
     C --> E[Binary Sniffer<br/>Scan Binaries]
-    D --> F[LiLY<br/>License Detection]
-    E --> F
-    F --> G[PURL2Notice<br/>Generate Legal Docs]
-    G --> H[Results to Frontend]
+    C --> F[Agentic Framework<br/>Intelligent Analysis]
+    D --> G[LiLY<br/>License Detection]
+    E --> G
+    F --> G
+    G --> H[PURL2Notice<br/>Generate Legal Docs]
+    H --> I[Results to Frontend]
 ```
 
 1. **User Input**: Submit Package URL through web interface
 2. **Source Retrieval**: Download complete source code
 3. **Pattern Analysis**: Extract code patterns and signatures
 4. **Binary Scanning**: Identify hidden OSS in compiled files
-5. **License Detection**: Classify and validate licenses
-6. **Notice Generation**: Create comprehensive legal documentation
+5. **Intelligent Analysis**: Apply agentic framework for advanced detection
+6. **License Detection**: Classify and validate licenses
+7. **Notice Generation**: Create comprehensive legal documentation
 
 ---
 
@@ -320,8 +340,8 @@ graph LR
 
 *Last updated: {} UTC*
 
-| Component | Version | Status | Progress | Open Tickets | Links |
-|-----------|---------|--------|----------|--------------|-------|
+| Component | Version | License | Status | Progress | Open Tickets | Links |
+|-----------|---------|---------|--------|----------|--------------|-------|
 """.format(
         overall_completion,
         get_status_badge(overall_completion),
@@ -350,10 +370,11 @@ graph LR
             else:
                 links.append("PyPI (planned)")
         
-        readme_content += "| **{}**<br/>*{}* | {} | {} | {} {:.0f}% | {} | {} |\n".format(
+        readme_content += "| **{}**<br/>*{}* | {} | {} | {} | {} {:.0f}% | {} | {} |\n".format(
             stats['name'],
             stats['description'],
             stats['version'],
+            stats['license'],
             status_icon,
             progress_bar,
             stats['completion'],
@@ -387,10 +408,11 @@ graph LR
                 readme_content += f"#### {status_emoji} {stats['name']} (`{stats['component_id']}`)\n\n"
                 readme_content += f"> {stats['description']}\n\n"
                 
-                if stats['github_exists'] or stats['pypi_exists']:
+                if stats['github_exists'] or stats['pypi_exists'] or stats.get('status_override') == 'complete':
                     readme_content += "| Metric | Value |\n"
                     readme_content += "|--------|-------|\n"
                     readme_content += f"| **Current Version** | {stats['version']} |\n"
+                    readme_content += f"| **License** | {stats['license']} |\n"
                     readme_content += f"| **Completion** | {stats['completion']:.1f}% |\n"
                     readme_content += f"| **Open Issues** | {stats['open_issues']} |\n"
                     readme_content += f"| **Closed Issues** | {stats['closed_issues']} |\n"
