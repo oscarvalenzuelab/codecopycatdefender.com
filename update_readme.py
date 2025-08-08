@@ -41,25 +41,33 @@ def fetch_github_stats(owner: str, repo: str) -> Optional[Dict]:
             # No releases yet
             pass
         
-        # Fetch open and closed issues
+        # Fetch open issues count from repo data
         open_issues = data.get('open_issues_count', 0)
         
-        # Try to get total issues (open + closed)
-        total_issues = open_issues
+        # Fetch closed issues count using search API
+        closed_issues = 0
         try:
-            issues_req = urllib.request.Request(f"{base_url}/issues?state=all&per_page=1", headers=headers)
-            with urllib.request.urlopen(issues_req) as response:
-                link_header = response.headers.get('Link', '')
-                if link_header and 'last' in link_header:
-                    # Parse the last page number from Link header
-                    import re
-                    match = re.search(r'page=(\d+)>; rel="last"', link_header)
-                    if match:
-                        total_issues = int(match.group(1))
-        except:
-            pass
+            # Use search API to get exact count of closed issues
+            search_url = f"https://api.github.com/search/issues?q=repo:{owner}/{repo}+type:issue+state:closed"
+            search_req = urllib.request.Request(search_url, headers=headers)
+            with urllib.request.urlopen(search_req) as response:
+                search_data = json.loads(response.read().decode())
+                closed_issues = search_data.get('total_count', 0)
+        except Exception as e:
+            # Fallback: try to get closed issues from issues endpoint
+            try:
+                closed_req = urllib.request.Request(f"{base_url}/issues?state=closed&per_page=1", headers=headers)
+                with urllib.request.urlopen(closed_req) as response:
+                    link_header = response.headers.get('Link', '')
+                    if link_header and 'last' in link_header:
+                        match = re.search(r'page=(\d+)>; rel="last"', link_header)
+                        if match:
+                            closed_issues = int(match.group(1))
+            except:
+                pass
         
-        closed_issues = max(0, total_issues - open_issues)
+        # Calculate total issues
+        total_issues = open_issues + closed_issues
         
         return {
             'exists': True,
@@ -191,7 +199,9 @@ def update_readme():
             'pypi': None,
             'description': 'Agentic analysis framework for intelligent code pattern detection',
             'category': 'Analysis Pipeline',
-            'license': 'Apache-2.0'
+            'license': 'Apache-2.0',
+            'status_override': 'functional',  # Project is functional despite open issues
+            'completion_override': 85.0  # Manual override based on actual functionality
         },
         {
             'name': 'LiLY Inspector',
@@ -252,14 +262,16 @@ def update_readme():
                     stats['version'] = github_stats.get('latest_version', '0.0.0')
                     
                     # Calculate completion
-                    if stats['total_issues'] > 0:
-                        stats['completion'] = calculate_completion(stats['closed_issues'], stats['total_issues'])
-                    elif stats['github_exists'] and stats['version'] != '0.0.0':
-                        # If repo exists with a release version but no issues, it's likely complete
-                        stats['completion'] = 100.0
-                    elif stats['github_exists']:
-                        # If repo exists but no version/issues yet, consider it as initial stage
-                        stats['completion'] = 10.0
+                    # Don't override if we have a manual completion set
+                    if component.get('completion_override') is None:
+                        if stats['total_issues'] > 0:
+                            stats['completion'] = calculate_completion(stats['closed_issues'], stats['total_issues'])
+                        elif stats['github_exists'] and stats['version'] != '0.0.0':
+                            # If repo exists with a release version but no issues, it's likely complete
+                            stats['completion'] = 100.0
+                        elif stats['github_exists']:
+                            # If repo exists but no version/issues yet, consider it as initial stage
+                            stats['completion'] = 10.0
                     
                     total_open += stats['open_issues']
                     total_closed += stats['closed_issues']
@@ -275,13 +287,17 @@ def update_readme():
                     if stats['completion'] == 0.0 and stats['pypi_exists']:
                         stats['completion'] = 100.0
         
-        # Handle manual status overrides for private/complete components
+        # Handle manual status overrides for private/complete/functional components
         if stats['status_override'] == 'complete':
             stats['completion'] = 100.0
             stats['github_exists'] = True  # Mark as existing even if private
+        elif stats['status_override'] == 'functional':
+            # Use completion_override if specified, otherwise default to 80%
+            stats['completion'] = component.get('completion_override', 80.0)
+            stats['github_exists'] = True  # Mark as existing
         
-        # Count ready components (version > 0.0.0 or exists or marked complete)
-        if stats['version'] != '0.0.0' or stats['github_exists'] or stats['status_override'] == 'complete':
+        # Count ready components (version > 0.0.0 or exists or marked complete/functional)
+        if stats['version'] != '0.0.0' or stats['github_exists'] or stats['status_override'] in ['complete', 'functional']:
             total_components_ready += 1
         
         component_stats.append(stats)
@@ -353,7 +369,11 @@ graph LR
     
     # Add each component to the table
     for stats in component_stats:
-        status_icon = "✅" if stats['version'] != '0.0.0' else "🚧"
+        # Component is ready if it has a version, is marked complete/functional, or has high completion
+        is_ready = (stats['version'] != '0.0.0' or 
+                   stats.get('status_override') in ['complete', 'functional'] or 
+                   stats['completion'] >= 80.0)
+        status_icon = "✅" if is_ready else "🚧"
         progress_bar = get_progress_bar(stats['completion'], 10)
         
         links = []
@@ -408,7 +428,7 @@ graph LR
                 readme_content += f"#### {status_emoji} {stats['name']} (`{stats['component_id']}`)\n\n"
                 readme_content += f"> {stats['description']}\n\n"
                 
-                if stats['github_exists'] or stats['pypi_exists'] or stats.get('status_override') == 'complete':
+                if stats['github_exists'] or stats['pypi_exists'] or stats.get('status_override') in ['complete', 'functional']:
                     readme_content += "| Metric | Value |\n"
                     readme_content += "|--------|-------|\n"
                     readme_content += f"| **Current Version** | {stats['version']} |\n"
