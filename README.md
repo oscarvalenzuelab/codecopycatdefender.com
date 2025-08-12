@@ -46,7 +46,7 @@ graph LR
 
 ## 🎯 Component Status Dashboard
 
-*Last updated: 2025-08-11 00:34:49 UTC*
+*Last updated: 2025-08-12 00:30:55 UTC*
 
 | Component | Version | License | Status | Progress | Open Tickets | Links |
 |-----------|---------|---------|--------|----------|--------------|-------|
@@ -54,7 +54,7 @@ graph LR
 | **Backend API**<br/>*Core API services with scan queue management and orchestration* | 0.0.0 | MIT | 🚧 | ░░░░░░░░░░ 0% | - | GitHub (planned) |
 | **PURL to Source**<br/>*Downloads source code from Package URLs (npm, PyPI, Maven, etc.)* | 0.1.1 | MIT | ✅ | ██████████ 100% | - | [GitHub](https://github.com/oscarvalenzuelab/semantic-copycat-purl2src) · [PyPI](https://pypi.org/project/semantic-copycat-purl2src/) |
 | **Code Miner**<br/>*Extracts code patterns and performs initial license detection* | 1.7.0 | Proprietary | ✅ | ██████████ 100% | - | Private Repo |
-| **Binary Sniffer**<br/>*Identifies hidden OSS components embedded in binary files* | 1.9.2 | MIT | ✅ | ████████░░ 85% | 2 | [GitHub](https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer) · [PyPI](https://pypi.org/project/semantic-copycat-binarysniffer/) |
+| **Binary Sniffer**<br/>*Identifies hidden OSS components embedded in binary files* | 1.9.5 | MIT | ✅ | ████████░░ 85% | 2 | [GitHub](https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer) · [PyPI](https://pypi.org/project/semantic-copycat-binarysniffer/) |
 | **Open Agentic Framework**<br/>*Agentic analysis framework for intelligent code pattern detection* | 0.0.0 | Apache-2.0 | ✅ | ████████░░ 85% | 20 | [GitHub](https://github.com/oscarvalenzuelab/open_agentic_framework) |
 | **LiLY Inspector**<br/>*Advanced license detection and classification engine* | 0.0.0 | MIT | 🚧 | ░░░░░░░░░░ 0% | - | GitHub (planned) |
 | **PURL to Notice**<br/>*Generates legal notices with licenses and copyright information* | 0.0.0 | MIT | 🚧 | ░░░░░░░░░░ 0% | - | GitHub (planned) |
@@ -112,7 +112,7 @@ graph LR
 
 | Metric | Value |
 |--------|-------|
-| **Current Version** | 1.9.2 |
+| **Current Version** | 1.9.5 |
 | **License** | MIT |
 | **Completion** | 84.6% |
 | **Open Issues** | 2 |
