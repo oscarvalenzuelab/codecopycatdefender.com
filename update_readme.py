@@ -222,7 +222,8 @@ def update_readme():
             'category': 'License Analysis',
             'license': 'MIT',
             'status_override': 'complete',  # Mark as complete
-            'completion_override': 100.0  # 100% complete
+            'completion_override': 100.0,  # 100% complete
+            'version_override': '1.0.0'  # Add version override
         }
     ]
     
@@ -295,10 +296,16 @@ def update_readme():
             # Use completion_override if specified, otherwise 100%
             stats['completion'] = component.get('completion_override', 100.0)
             stats['github_exists'] = True  # Mark as existing even if private
+            # Also use version_override if specified
+            if component.get('version_override'):
+                stats['version'] = component['version_override']
         elif stats['status_override'] == 'functional':
             # Use completion_override if specified, otherwise default to 80%
             stats['completion'] = component.get('completion_override', 80.0)
             stats['github_exists'] = True  # Mark as existing
+            # Also use version_override if specified
+            if component.get('version_override'):
+                stats['version'] = component['version_override']
         
         # Count ready components (version > 0.0.0 or exists or marked complete/functional)
         if stats['version'] != '0.0.0' or stats['github_exists'] or stats['status_override'] in ['complete', 'functional']:
