@@ -197,9 +197,12 @@ def update_readme():
             'component_id': 'open-agentic-framework',
             'github': 'https://github.com/oscarvalenzuelab/open_agentic_framework',
             'pypi': None,
-            'description': 'Agentic analysis framework for intelligent code pattern detection',
+            'description': 'Agentic AI for Compliance and Risk Analysis',
             'category': 'Analysis Pipeline',
-            'license': 'Apache-2.0'
+            'license': 'Apache-2.0',
+            'status_override': 'complete',
+            'completion_override': 100.0,
+            'version_override': '1.1.0'
         },
         {
             'name': 'LiLY Inspector',
