@@ -35,17 +35,18 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         python update_readme.py
+        python generate_html.py
     
     - name: Check for changes
       id: verify-changed-files
       run: |
-        git diff --exit-code README.md || echo "changed=true" >> $GITHUB_OUTPUT
+        git diff --exit-code README.md index.html || echo "changed=true" >> $GITHUB_OUTPUT
     
     - name: Commit and push if changed
       if: steps.verify-changed-files.outputs.changed == 'true'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        git add README.md
-        git commit -m "🤖 Update README with latest project statistics"
+        git add README.md index.html
+        git commit -m "🤖 Update README and website with latest project statistics"
         git push
