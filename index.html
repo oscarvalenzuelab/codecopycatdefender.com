@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copycat Code Defender - OSS Compliance & License Detection Platform</title>
+    <title>Copycat Code Defender - Enterprise OSS Compliance Platform</title>
     <style>
         * {
             margin: 0;
@@ -12,22 +12,22 @@
         }
         
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --dark: #1f2937;
-            --light: #f3f4f6;
+            --primary: #9B0002;
+            --primary-dark: #7A0001;
+            --primary-light: #C50003;
+            --black: #1a1a1a;
+            --gray: #666666;
+            --light-gray: #f5f5f5;
             --white: #ffffff;
+            --success: #0A6E0A;
+            --warning: #B85C00;
         }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
-            color: var(--dark);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            color: var(--black);
+            background: var(--white);
         }
         
         .container {
@@ -37,130 +37,191 @@
         }
         
         header {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
         }
         
         .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-size: 1.75rem;
+            font-weight: 300;
+            letter-spacing: -0.5px;
         }
         
-        .logo span {
-            margin-left: 0.5rem;
+        .logo strong {
+            font-weight: 700;
         }
         
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
         
         .nav-links a {
-            color: var(--dark);
-            text-decoration: none;
-            transition: color 0.3s;
+            color: var(--white);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: opacity 0.3s;
+            font-weight: 400;
         }
         
         .nav-links a:hover {
-            color: var(--primary);
+            opacity: 0.8;
         }
         
         .hero {
-            margin-top: 80px;
-            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 5rem 0;
             text-align: center;
-            color: white;
         }
         
         h1 {
             font-size: 3rem;
+            font-weight: 300;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: -1px;
+        }
+        
+        h1 strong {
+            font-weight: 700;
         }
         
         .subtitle {
             font-size: 1.25rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
             opacity: 0.95;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 3rem 0;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1.5rem;
-            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
         
         .stat-label {
-            color: #6b7280;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        
+        section {
+            padding: 4rem 0;
+        }
+        
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+        
+        h2 strong {
+            font-weight: 700;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .feature-section {
+            background: var(--white);
+            border: 1px solid #e0e0e0;
+            padding: 2rem;
+        }
+        
+        .feature-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .feature-section.available h3 {
+            color: var(--success);
+            border-color: var(--success);
+        }
+        
+        .feature-section.development h3 {
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list strong {
+            color: var(--black);
+            font-weight: 600;
+        }
+        
+        .feature-list span {
+            color: var(--gray);
+            display: block;
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
         
-        
-        .components {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 2rem 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-        
-        .components h2 {
-            text-align: center;
-            color: var(--dark);
-            margin-bottom: 2rem;
-            font-size: 2rem;
+        .components-section {
+            background: var(--light-gray);
         }
         
         .component-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
         }
         
         .component-card {
-            background: var(--light);
-            border-radius: 12px;
+            background: var(--white);
+            border: 1px solid #e0e0e0;
             padding: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent;
+            transition: box-shadow 0.3s;
         }
         
         .component-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         .component-header {
@@ -171,85 +232,95 @@
         }
         
         .component-name {
-            font-weight: bold;
-            color: var(--dark);
+            font-weight: 600;
+            color: var(--black);
+            font-size: 1.125rem;
         }
         
         .component-status {
             padding: 0.25rem 0.75rem;
-            border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .status-ready {
-            background: var(--secondary);
-            color: white;
+            background: var(--success);
+            color: var(--white);
         }
         
         .status-development {
             background: var(--warning);
-            color: white;
+            color: var(--white);
         }
         
         .component-desc {
-            color: #6b7280;
+            color: var(--gray);
             font-size: 0.875rem;
             margin-bottom: 1rem;
+            line-height: 1.5;
         }
         
+        .component-meta {
+            font-size: 0.75rem;
+            color: var(--gray);
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
         
         .component-links {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-top: 1rem;
         }
         
         .component-links a {
             color: var(--primary);
-            text-decoration: none;
+            text-decoration: underline;
             font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
+            text-underline-offset: 2px;
         }
         
         .component-links a:hover {
-            text-decoration: underline;
+            color: var(--primary-dark);
         }
         
         .cta {
             text-align: center;
-            padding: 3rem 0;
+            padding: 4rem 0;
+            background: var(--white);
         }
         
         .btn {
             display: inline-block;
-            padding: 1rem 2rem;
-            background: white;
-            color: var(--primary);
+            padding: 1rem 2.5rem;
+            background: var(--primary);
+            color: var(--white);
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-weight: 500;
+            transition: background 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.875rem;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
+            background: var(--primary-dark);
         }
         
         footer {
+            background: var(--black);
+            color: var(--white);
             text-align: center;
             padding: 2rem 0;
-            color: white;
-            opacity: 0.9;
+            font-size: 0.875rem;
+        }
+        
+        footer a {
+            color: var(--white);
+            text-decoration: underline;
+            text-underline-offset: 2px;
         }
         
         @media (max-width: 768px) {
@@ -257,9 +328,16 @@
                 font-size: 2rem;
             }
             
+            h2 {
+                font-size: 1.75rem;
+            }
             
             .nav-links {
                 display: none;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -268,9 +346,10 @@
     <header>
         <nav class="container">
             <div class="logo">
-                🛡️ <span>Copycat Code Defender</span>
+                <strong>COPYCAT</strong> CODE DEFENDER
             </div>
             <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
                 <li><a href="#components">Components</a></li>
                 <li><a href="https://github.com/oscarvalenzuelab/copycatcodedefender.com">GitHub</a></li>
             </ul>
@@ -279,13 +358,13 @@
     
     <section class="hero">
         <div class="container">
-            <h1>🛡️ Copycat Code Defender</h1>
-            <p class="subtitle">Comprehensive code similarity detection and license compliance platform</p>
+            <h1><strong>Enterprise</strong> OSS Compliance Platform</h1>
+            <p class="subtitle">Comprehensive code similarity detection and license compliance for modern software development</p>
             
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number">90%</div>
-                    <div class="stat-label">Project Complete</div>
+                    <div class="stat-label">Complete</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">10</div>
@@ -293,67 +372,104 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">8</div>
-                    <div class="stat-label">Ready</div>
+                    <div class="stat-label">Production Ready</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">2</div>
-                    <div class="stat-label">In Development</div>
+                    <div class="stat-number">700+</div>
+                    <div class="stat-label">SPDX Licenses</div>
                 </div>
             </div>
         </div>
     </section>
     
-    <section class="container">
-        <div class="components">
-            <h2>🗺️ Feature Map</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-                <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1.5rem;">
-                    <h3 style="color: #10b981; margin-bottom: 1rem;">✅ Available Features</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 0.5rem;">📦 <strong>Package Download</strong> - Fetch source from PURL (npm, PyPI, Maven)</li>
-                        <li style="margin-bottom: 0.5rem;">🔍 <strong>Code Pattern Mining</strong> - Extract and analyze code signatures</li>
-                        <li style="margin-bottom: 0.5rem;">🔬 <strong>Binary Scanning</strong> - Detect embedded OSS in binaries</li>
-                        <li style="margin-bottom: 0.5rem;">📜 <strong>License Detection</strong> - Identify 700+ SPDX licenses</li>
-                        <li style="margin-bottom: 0.5rem;">🤖 <strong>AI Analysis</strong> - Intelligent pattern recognition</li>
-                        <li style="margin-bottom: 0.5rem;">📊 <strong>Metadata Extraction</strong> - Parse 13 package ecosystems</li>
-                        <li style="margin-bottom: 0.5rem;">🆔 <strong>Source Identification</strong> - Map code to package coordinates</li>
-                    </ul>
-                </div>
-                <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 1.5rem;">
-                    <h3 style="color: #f59e0b; margin-bottom: 1rem;">🚧 In Development</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 0.5rem;">🌐 <strong>Web Interface</strong> - User-friendly scan submission portal</li>
-                        <li style="margin-bottom: 0.5rem;">⚡ <strong>REST API</strong> - Programmatic access & integration</li>
-                        <li style="margin-bottom: 0.5rem;">📄 <strong>Notice Generation</strong> - Automated legal document creation</li>
-                        <li style="margin-bottom: 0.5rem;">🔄 <strong>Batch Processing</strong> - Multi-package concurrent analysis</li>
-                        <li style="margin-bottom: 0.5rem;">📈 <strong>Reporting Dashboard</strong> - Compliance metrics & trends</li>
-                        <li style="margin-bottom: 0.5rem;">🔗 <strong>CI/CD Integration</strong> - Pipeline automation plugins</li>
-                    </ul>
-                </div>
+    <section id="features" class="container">
+        <h2><strong>Platform</strong> Capabilities</h2>
+        <div class="feature-grid">
+            <div class="feature-section available">
+                <h3>Available Features</h3>
+                <ul class="feature-list">
+                    <li>
+                        <strong>Package Download Engine</strong>
+                        <span>Automated source retrieval from PURL (npm, PyPI, Maven, Go, Cargo)</span>
+                    </li>
+                    <li>
+                        <strong>Code Pattern Mining</strong>
+                        <span>Advanced signature extraction and semantic analysis algorithms</span>
+                    </li>
+                    <li>
+                        <strong>Binary Component Scanner</strong>
+                        <span>Detection of embedded OSS components in compiled binaries</span>
+                    </li>
+                    <li>
+                        <strong>License Detection System</strong>
+                        <span>Identification of 700+ SPDX licenses with confidence scoring</span>
+                    </li>
+                    <li>
+                        <strong>AI-Powered Analysis</strong>
+                        <span>Intelligent pattern recognition using agentic framework</span>
+                    </li>
+                    <li>
+                        <strong>Metadata Extraction</strong>
+                        <span>Universal parser supporting 13 package ecosystems</span>
+                    </li>
+                    <li>
+                        <strong>Source Identification</strong>
+                        <span>Package coordinate mapping using SWHIDs and fingerprinting</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="feature-section development">
+                <h3>In Development</h3>
+                <ul class="feature-list">
+                    <li>
+                        <strong>Web Management Interface</strong>
+                        <span>Enterprise dashboard for scan submission and monitoring</span>
+                    </li>
+                    <li>
+                        <strong>RESTful API</strong>
+                        <span>Programmatic access with authentication and rate limiting</span>
+                    </li>
+                    <li>
+                        <strong>Automated Notice Generation</strong>
+                        <span>Legal document creation with attribution requirements</span>
+                    </li>
+                    <li>
+                        <strong>Batch Processing Pipeline</strong>
+                        <span>Concurrent analysis of multiple packages with queue management</span>
+                    </li>
+                    <li>
+                        <strong>Compliance Dashboard</strong>
+                        <span>Real-time metrics, trends, and risk assessment reports</span>
+                    </li>
+                    <li>
+                        <strong>CI/CD Integration</strong>
+                        <span>Native plugins for Jenkins, GitLab, GitHub Actions</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
     
-    <section id="components" class="container">
-        <div class="components">
-            <h2>🎯 Component Status</h2>
+    <section id="components" class="components-section">
+        <div class="container">
+            <h2><strong>Component</strong> Status</h2>
             <div class="component-grid">
                 <div class="component-card">
                     <div class="component-header">
                         <span class="component-name">Frontend UI</span>
-                        <span class="component-status status-development">In Dev</span>
+                        <span class="component-status status-development">Development</span>
                     </div>
-                    <p class="component-desc">Web interface for scan submission and results visualization</p>
-                    <small>Version: 0.0.0 | License: MIT</small>
+                    <p class="component-desc">Web interface for scan submission and results visualization with enterprise authentication</p>
+                    <div class="component-meta">Version: 0.0.0 | License: MIT</div>
                 </div>
                 
                 <div class="component-card">
                     <div class="component-header">
                         <span class="component-name">Backend API</span>
-                        <span class="component-status status-development">In Dev</span>
+                        <span class="component-status status-development">Development</span>
                     </div>
-                    <p class="component-desc">Core API services with scan queue management and orchestration</p>
-                    <small>Version: 0.0.0 | License: MIT</small>
+                    <p class="component-desc">Core API services with scan queue management, orchestration, and webhook notifications</p>
+                    <div class="component-meta">Version: 0.0.0 | License: MIT</div>
                 </div>
                 
                 <div class="component-card">
@@ -361,11 +477,11 @@
                         <span class="component-name">PURL to Source</span>
                         <span class="component-status status-ready">Ready</span>
                     </div>
-                    <p class="component-desc">Downloads source code from Package URLs (npm, PyPI, Maven, etc.)</p>
-                    <small>Version: 0.1.1 | License: MIT</small>
+                    <p class="component-desc">Downloads source code from Package URLs supporting npm, PyPI, Maven, Go, and more</p>
+                    <div class="component-meta">Version: 0.1.1 | License: MIT</div>
                     <div class="component-links">
-                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2src">🔗 GitHub</a>
-                        <a href="https://pypi.org/project/semantic-copycat-purl2src/">📦 PyPI</a>
+                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2src">GitHub</a>
+                        <a href="https://pypi.org/project/semantic-copycat-purl2src/">PyPI</a>
                     </div>
                 </div>
                 
@@ -374,8 +490,8 @@
                         <span class="component-name">Code Miner</span>
                         <span class="component-status status-ready">Ready</span>
                     </div>
-                    <p class="component-desc">Extracts code patterns and performs initial license detection</p>
-                    <small>Version: 1.7.0 | License: Proprietary</small>
+                    <p class="component-desc">Extracts code patterns and performs initial license detection using semantic analysis</p>
+                    <div class="component-meta">Version: 1.7.0 | License: Proprietary</div>
                 </div>
                 
                 <div class="component-card">
@@ -383,11 +499,11 @@
                         <span class="component-name">Binary Sniffer</span>
                         <span class="component-status status-ready">Ready</span>
                     </div>
-                    <p class="component-desc">Identifies hidden OSS components embedded in binary files</p>
-                    <small>Version: 1.10.0 | License: MIT</small>
+                    <p class="component-desc">Identifies hidden OSS components embedded in binary files through signature matching</p>
+                    <div class="component-meta">Version: 1.10.0 | License: MIT</div>
                     <div class="component-links">
-                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer">🔗 GitHub</a>
-                        <a href="https://pypi.org/project/semantic-copycat-binarysniffer/">📦 PyPI</a>
+                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer">GitHub</a>
+                        <a href="https://pypi.org/project/semantic-copycat-binarysniffer/">PyPI</a>
                     </div>
                 </div>
                 
@@ -396,10 +512,10 @@
                         <span class="component-name">Open Agentic Framework</span>
                         <span class="component-status status-ready">Ready</span>
                     </div>
-                    <p class="component-desc">Agentic analysis framework for intelligent code pattern detection</p>
-                    <small>Version: 1.1.0 | License: Apache-2.0</small>
+                    <p class="component-desc">AI-powered analysis framework for intelligent code pattern detection and classification</p>
+                    <div class="component-meta">Version: 1.1.0 | License: Apache-2.0</div>
                     <div class="component-links">
-                        <a href="https://github.com/oscarvalenzuelab/open_agentic_framework">🔗 GitHub</a>
+                        <a href="https://github.com/oscarvalenzuelab/open_agentic_framework">GitHub</a>
                     </div>
                 </div>
                 
@@ -409,22 +525,22 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">High-performance license detection across 700+ SPDX identifiers with confidence scores</p>
-                    <small>Version: 1.2.6 | License: Apache-2.0</small>
+                    <div class="component-meta">Version: 1.2.6 | License: Apache-2.0</div>
                     <div class="component-links">
-                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-oslili">🔗 GitHub</a>
-                        <a href="https://pypi.org/project/semantic-copycat-oslili/">📦 PyPI</a>
+                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-oslili">GitHub</a>
+                        <a href="https://pypi.org/project/semantic-copycat-oslili/">PyPI</a>
                     </div>
                 </div>
                 
                 <div class="component-card">
                     <div class="component-header">
                         <span class="component-name">PURL to Notice</span>
-                        <span class="component-status status-development">In Dev</span>
+                        <span class="component-status status-development">Development</span>
                     </div>
-                    <p class="component-desc">Generates legal notices with licenses and copyright information</p>
-                    <small>Version: 0.0.0 | License: MIT</small>
+                    <p class="component-desc">Generates legal notices with licenses and copyright information for compliance</p>
+                    <div class="component-meta">Version: 0.0.0 | License: MIT</div>
                     <div class="component-links">
-                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice">🔗 GitHub</a>
+                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice">GitHub</a>
                     </div>
                 </div>
                 
@@ -434,10 +550,10 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Universal package metadata extractor supporting 13 package ecosystems</p>
-                    <small>Version: 1.5.0 | License: MIT</small>
+                    <div class="component-meta">Version: 1.5.0 | License: MIT</div>
                     <div class="component-links">
-                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-upmex">🔗 GitHub</a>
-                        <a href="https://pypi.org/project/semantic-copycat-upmex/">📦 PyPI</a>
+                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-upmex">GitHub</a>
+                        <a href="https://pypi.org/project/semantic-copycat-upmex/">PyPI</a>
                     </div>
                 </div>
                 
@@ -447,25 +563,30 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Identifies package coordinates from source code using SWHIDs and multiple strategies</p>
-                    <small>Version: 1.1.2 | License: AGPL-3.0</small>
+                    <div class="component-meta">Version: 1.1.2 | License: AGPL-3.0</div>
                     <div class="component-links">
-                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-src2id">🔗 GitHub</a>
-                        <a href="https://pypi.org/project/semantic-copycat-src2id/">📦 PyPI</a>
+                        <a href="https://github.com/oscarvalenzuelab/semantic-copycat-src2id">GitHub</a>
+                        <a href="https://pypi.org/project/semantic-copycat-src2id/">PyPI</a>
                     </div>
                 </div>
-                
             </div>
+        </div>
     </section>
     
-    <section class="cta container">
-        <a href="https://github.com/oscarvalenzuelab/copycatcodedefender.com" class="btn btn-primary">
-            View on GitHub →
-        </a>
+    <section class="cta">
+        <div class="container">
+            <a href="https://github.com/oscarvalenzuelab/copycatcodedefender.com" class="btn">
+                View on GitHub
+            </a>
+        </div>
     </section>
     
     <footer>
         <div class="container">
-            <p>© 2025 Copycat Code Defender Project</p>
+            <p>© 2025 Copycat Code Defender | Enterprise OSS Compliance Platform</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">
+                For inquiries: <a href="https://github.com/oscarvalenzuelab">@oscarvalenzuelab</a>
+            </p>
         </div>
     </footer>
     
@@ -479,24 +600,6 @@
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
-        });
-        
-        // Animate progress bars on scroll
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.width = entry.target.getAttribute('data-width') || '0%';
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.progress-fill').forEach(bar => {
-            observer.observe(bar);
         });
     </script>
 </body>
