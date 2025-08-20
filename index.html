@@ -127,69 +127,6 @@
             margin-top: 0.25rem;
         }
         
-        .workflow {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 2rem 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-        
-        .workflow h2 {
-            text-align: center;
-            color: var(--dark);
-            margin-bottom: 2rem;
-            font-size: 2rem;
-        }
-        
-        .pipeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        
-        .pipeline-step {
-            flex: 1;
-            min-width: 140px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .pipeline-step:not(:last-child)::after {
-            content: '→';
-            position: absolute;
-            right: -20px;
-            top: 35%;
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-        
-        .step-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 0.5rem;
-            color: white;
-            font-size: 1.5rem;
-        }
-        
-        .step-title {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-        
-        .step-desc {
-            font-size: 0.875rem;
-            color: #6b7280;
-        }
         
         .components {
             background: white;
@@ -261,20 +198,6 @@
             margin-bottom: 1rem;
         }
         
-        .progress-bar {
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 4px;
-            transition: width 0.3s;
-        }
         
         .component-links {
             display: flex;
@@ -334,9 +257,6 @@
                 font-size: 2rem;
             }
             
-            .pipeline-step:not(:last-child)::after {
-                display: none;
-            }
             
             .nav-links {
                 display: none;
@@ -351,7 +271,6 @@
                 🛡️ <span>Copycat Code Defender</span>
             </div>
             <ul class="nav-links">
-                <li><a href="#workflow">Workflow</a></li>
                 <li><a href="#components">Components</a></li>
                 <li><a href="https://github.com/oscarvalenzuelab/copycatcodedefender.com">GitHub</a></li>
             </ul>
@@ -384,44 +303,32 @@
         </div>
     </section>
     
-    <section id="workflow" class="container">
-        <div class="workflow">
-            <h2>🔄 Analysis Workflow</h2>
-            <div class="pipeline">
-                <div class="pipeline-step">
-                    <div class="step-icon">📦</div>
-                    <div class="step-title">Submit PURL</div>
-                    <div class="step-desc">Package URL input</div>
+    <section class="container">
+        <div class="components">
+            <h2>🗺️ Feature Map</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <div style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 1.5rem;">
+                    <h3 style="color: #10b981; margin-bottom: 1rem;">✅ Available Features</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">📦 <strong>Package Download</strong> - Fetch source from PURL (npm, PyPI, Maven)</li>
+                        <li style="margin-bottom: 0.5rem;">🔍 <strong>Code Pattern Mining</strong> - Extract and analyze code signatures</li>
+                        <li style="margin-bottom: 0.5rem;">🔬 <strong>Binary Scanning</strong> - Detect embedded OSS in binaries</li>
+                        <li style="margin-bottom: 0.5rem;">📜 <strong>License Detection</strong> - Identify 700+ SPDX licenses</li>
+                        <li style="margin-bottom: 0.5rem;">🤖 <strong>AI Analysis</strong> - Intelligent pattern recognition</li>
+                        <li style="margin-bottom: 0.5rem;">📊 <strong>Metadata Extraction</strong> - Parse 13 package ecosystems</li>
+                        <li style="margin-bottom: 0.5rem;">🆔 <strong>Source Identification</strong> - Map code to package coordinates</li>
+                    </ul>
                 </div>
-                <div class="pipeline-step">
-                    <div class="step-icon">⬇️</div>
-                    <div class="step-title">Download</div>
-                    <div class="step-desc">Source retrieval</div>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-icon">🔍</div>
-                    <div class="step-title">Analyze</div>
-                    <div class="step-desc">Pattern extraction</div>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-icon">🔬</div>
-                    <div class="step-title">Scan Binaries</div>
-                    <div class="step-desc">Hidden OSS detection</div>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-icon">🤖</div>
-                    <div class="step-title">Agentic Framework</div>
-                    <div class="step-desc">Intelligent analysis</div>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-icon">📜</div>
-                    <div class="step-title">Detect License</div>
-                    <div class="step-desc">Classification</div>
-                </div>
-                <div class="pipeline-step">
-                    <div class="step-icon">📄</div>
-                    <div class="step-title">Generate Notice</div>
-                    <div class="step-desc">Legal documents</div>
+                <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 1.5rem;">
+                    <h3 style="color: #f59e0b; margin-bottom: 1rem;">🚧 In Development</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">🌐 <strong>Web Interface</strong> - User-friendly scan submission portal</li>
+                        <li style="margin-bottom: 0.5rem;">⚡ <strong>REST API</strong> - Programmatic access & integration</li>
+                        <li style="margin-bottom: 0.5rem;">📄 <strong>Notice Generation</strong> - Automated legal document creation</li>
+                        <li style="margin-bottom: 0.5rem;">🔄 <strong>Batch Processing</strong> - Multi-package concurrent analysis</li>
+                        <li style="margin-bottom: 0.5rem;">📈 <strong>Reporting Dashboard</strong> - Compliance metrics & trends</li>
+                        <li style="margin-bottom: 0.5rem;">🔗 <strong>CI/CD Integration</strong> - Pipeline automation plugins</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -437,9 +344,6 @@
                         <span class="component-status status-development">In Dev</span>
                     </div>
                     <p class="component-desc">Web interface for scan submission and results visualization</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
                     <small>Version: 0.0.0 | License: MIT</small>
                 </div>
                 
@@ -449,9 +353,6 @@
                         <span class="component-status status-development">In Dev</span>
                     </div>
                     <p class="component-desc">Core API services with scan queue management and orchestration</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
                     <small>Version: 0.0.0 | License: MIT</small>
                 </div>
                 
@@ -461,9 +362,6 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Downloads source code from Package URLs (npm, PyPI, Maven, etc.)</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
-                    </div>
                     <small>Version: 0.1.1 | License: MIT</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2src">🔗 GitHub</a>
@@ -477,9 +375,6 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Extracts code patterns and performs initial license detection</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
-                    </div>
                     <small>Version: 1.7.0 | License: Proprietary</small>
                 </div>
                 
@@ -489,9 +384,6 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Identifies hidden OSS components embedded in binary files</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 95%"></div>
-                    </div>
                     <small>Version: 1.10.0 | License: MIT</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer">🔗 GitHub</a>
@@ -505,9 +397,6 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Agentic analysis framework for intelligent code pattern detection</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
-                    </div>
                     <small>Version: 1.1.0 | License: Apache-2.0</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/open_agentic_framework">🔗 GitHub</a>
@@ -520,9 +409,6 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">High-performance license detection across 700+ SPDX identifiers with confidence scores</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
-                    </div>
                     <small>Version: 1.2.6 | License: Apache-2.0</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/semantic-copycat-oslili">🔗 GitHub</a>
@@ -536,9 +422,6 @@
                         <span class="component-status status-development">In Dev</span>
                     </div>
                     <p class="component-desc">Generates legal notices with licenses and copyright information</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 0%"></div>
-                    </div>
                     <small>Version: 0.0.0 | License: MIT</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice">🔗 GitHub</a>
@@ -551,9 +434,6 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Universal package metadata extractor supporting 13 package ecosystems</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
-                    </div>
                     <small>Version: 1.5.0 | License: MIT</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/semantic-copycat-upmex">🔗 GitHub</a>
@@ -567,9 +447,6 @@
                         <span class="component-status status-ready">Ready</span>
                     </div>
                     <p class="component-desc">Identifies package coordinates from source code using SWHIDs and multiple strategies</p>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: 100%"></div>
-                    </div>
                     <small>Version: 1.1.2 | License: AGPL-3.0</small>
                     <div class="component-links">
                         <a href="https://github.com/oscarvalenzuelab/semantic-copycat-src2id">🔗 GitHub</a>
