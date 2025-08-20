@@ -41,39 +41,8 @@ def fetch_github_stats(owner: str, repo: str) -> Optional[Dict]:
             # No releases yet
             pass
         
-        # Fetch open issues count from repo data
-        open_issues = data.get('open_issues_count', 0)
-        
-        # Fetch closed issues count using search API
-        closed_issues = 0
-        try:
-            # Use search API to get exact count of closed issues
-            search_url = f"https://api.github.com/search/issues?q=repo:{owner}/{repo}+type:issue+state:closed"
-            search_req = urllib.request.Request(search_url, headers=headers)
-            with urllib.request.urlopen(search_req) as response:
-                search_data = json.loads(response.read().decode())
-                closed_issues = search_data.get('total_count', 0)
-        except Exception as e:
-            # Fallback: try to get closed issues from issues endpoint
-            try:
-                closed_req = urllib.request.Request(f"{base_url}/issues?state=closed&per_page=1", headers=headers)
-                with urllib.request.urlopen(closed_req) as response:
-                    link_header = response.headers.get('Link', '')
-                    if link_header and 'last' in link_header:
-                        match = re.search(r'page=(\d+)>; rel="last"', link_header)
-                        if match:
-                            closed_issues = int(match.group(1))
-            except:
-                pass
-        
-        # Calculate total issues
-        total_issues = open_issues + closed_issues
-        
         return {
             'exists': True,
-            'open_issues': open_issues,
-            'closed_issues': closed_issues,
-            'total_issues': total_issues,
             'latest_version': latest_version,
             'updated_at': data.get('updated_at', 'N/A'),
             'created_at': data.get('created_at', 'N/A'),
@@ -81,7 +50,7 @@ def fetch_github_stats(owner: str, repo: str) -> Optional[Dict]:
         }
     except urllib.error.HTTPError as e:
         if e.code == 404:
-            return {'exists': False, 'open_issues': 0, 'closed_issues': 0, 'total_issues': 0, 'latest_version': '0.0.0'}
+            return {'exists': False, 'latest_version': '0.0.0'}
         print(f"Error fetching stats for {owner}/{repo}: {e}")
         return None
     except (urllib.error.URLError, json.JSONDecodeError) as e:
@@ -117,24 +86,7 @@ def parse_github_url(url: str) -> Optional[tuple]:
         return match.group(1), match.group(2)
     return None
 
-def calculate_completion(closed_issues: int, total_issues: int) -> float:
-    """Calculate completion percentage"""
-    if total_issues == 0:
-        return 0.0
-    return (closed_issues / total_issues) * 100
-
-def get_status_badge(percentage: float) -> str:
-    """Get status badge based on completion percentage"""
-    if percentage >= 90:
-        return "🟢"  # Green - Almost complete
-    elif percentage >= 70:
-        return "🟡"  # Yellow - Good progress
-    elif percentage >= 40:
-        return "🟠"  # Orange - In progress
-    else:
-        return "🔴"  # Red - Early stage
-
-def get_progress_bar(percentage: float, width: int = 20) -> str:
+def get_progress_bar(percentage: float, width: int = 50) -> str:
     """Create a visual progress bar"""
     filled = int((percentage / 100) * width)
     empty = width - filled
@@ -143,116 +95,116 @@ def get_progress_bar(percentage: float, width: int = 20) -> str:
 def update_readme():
     """Main function to update README with latest stats"""
     
-    # Define all components of Copycat Code Defender
+    # Define all components of Copycat Code Defender - Updated list
     components = [
         {
             'name': 'Frontend UI',
-            'component_id': 'semantic-copycat-frontend',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-frontend',
             'pypi': None,
-            'description': 'Web interface for scan submission and results visualization',
-            'category': 'Web Platform',
-            'license': 'MIT'
+            'description': 'Web interface for scan submission and results visualization with enterprise authentication',
+            'license': 'MIT',
+            'status': 'development'
         },
         {
             'name': 'Backend API',
-            'component_id': 'semantic-copycat-backend',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-backend',
             'pypi': None,
-            'description': 'Core API services with scan queue management and orchestration',
-            'category': 'Web Platform',
-            'license': 'MIT'
+            'description': 'Core API services with scan queue management, orchestration, and webhook notifications',
+            'license': 'MIT',
+            'status': 'development'
         },
         {
             'name': 'PURL to Source',
-            'component_id': 'semantic-copycat-purl2src',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2src',
             'pypi': 'semantic-copycat-purl2src',
-            'description': 'Downloads source code from Package URLs (npm, PyPI, Maven, etc.)',
-            'category': 'Analysis Pipeline',
-            'license': 'MIT'
+            'description': 'Downloads source code from Package URLs supporting npm, PyPI, Maven, Go, and more',
+            'license': 'MIT',
+            'status': 'ready',
+            'version_override': '0.1.1'
         },
         {
             'name': 'Code Miner',
-            'component_id': 'semantic-copycat-miner',
             'github': None,  # Private repository
-            'pypi': None,  # Not published to PyPI
-            'description': 'Extracts code patterns and performs initial license detection',
-            'category': 'Analysis Pipeline',
-            'status_override': 'complete',  # Manually set as complete
-            'version_override': '1.7.0',  # Manually set version
-            'license': 'Proprietary'
+            'pypi': None,
+            'description': 'Extracts code patterns and performs initial license detection using semantic analysis',
+            'license': 'Proprietary',
+            'status': 'ready',
+            'version_override': '1.7.0'
         },
         {
             'name': 'Binary Sniffer',
-            'component_id': 'semantic-copycat-binarysniffer',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-binarysniffer',
             'pypi': 'semantic-copycat-binarysniffer',
-            'description': 'Identifies hidden OSS components embedded in binary files',
-            'category': 'Analysis Pipeline',
-            'license': 'MIT'
+            'description': 'Identifies hidden OSS components embedded in binary files through signature matching',
+            'license': 'MIT',
+            'status': 'ready',
+            'version_override': '1.10.0'
         },
         {
             'name': 'Open Agentic Framework',
-            'component_id': 'open-agentic-framework',
             'github': 'https://github.com/oscarvalenzuelab/open_agentic_framework',
             'pypi': None,
-            'description': 'Agentic AI for Compliance and Risk Analysis',
-            'category': 'Analysis Pipeline',
+            'description': 'AI-powered analysis framework for intelligent code pattern detection and classification',
             'license': 'Apache-2.0',
-            'status_override': 'complete',
-            'completion_override': 100.0,
+            'status': 'ready',
             'version_override': '1.1.0'
         },
         {
-            'name': 'LiLY Inspector',
-            'component_id': 'semantic-copycat-lily',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-lily',
-            'pypi': None,
-            'description': 'Advanced license detection and classification engine',
-            'category': 'License Analysis',
-            'license': 'MIT'
+            'name': 'OSLiLi Inspector',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
+            'pypi': 'semantic-copycat-oslili',
+            'description': 'High-performance license detection across 700+ SPDX identifiers with confidence scores',
+            'license': 'Apache-2.0',
+            'status': 'ready',
+            'version_override': '1.2.6'
         },
         {
             'name': 'PURL to Notice',
-            'component_id': 'semantic-copycat-purl2notice',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice',
             'pypi': None,
-            'description': 'Generates legal notices with licenses and copyright information',
-            'category': 'License Analysis',
+            'description': 'Generates legal notices with licenses and copyright information for compliance',
             'license': 'MIT',
-            'status_override': 'complete',  # Mark as complete
-            'completion_override': 100.0,  # 100% complete
-            'version_override': '1.0.0'  # Add version override
+            'status': 'development'
+        },
+        {
+            'name': 'UPMEX',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-upmex',
+            'pypi': 'semantic-copycat-upmex',
+            'description': 'Universal package metadata extractor supporting 13 package ecosystems',
+            'license': 'MIT',
+            'status': 'ready',
+            'version_override': '1.5.0'
+        },
+        {
+            'name': 'Src2ID',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-src2id',
+            'pypi': 'semantic-copycat-src2id',
+            'description': 'Identifies package coordinates from source code using SWHIDs and multiple strategies',
+            'license': 'AGPL-3.0',
+            'status': 'ready',
+            'version_override': '1.1.2'
         }
     ]
     
     # Fetch stats for all components
     component_stats = []
-    total_open = 0
-    total_closed = 0
-    total_components_ready = 0
+    total_ready = 0
+    total_dev = 0
     
     for component in components:
         stats = {
             'name': component['name'],
-            'component_id': component['component_id'],
             'description': component['description'],
-            'category': component.get('category', 'Core'),
-            'license': component.get('license', 'TBD'),
-            'github_exists': False,
-            'pypi_exists': False,
+            'license': component.get('license', 'MIT'),
             'version': component.get('version_override', '0.0.0'),
-            'open_issues': 0,
-            'closed_issues': 0,
-            'total_issues': 0,
-            'completion': 0.0,
+            'status': component.get('status', 'development'),
             'github_url': component.get('github', ''),
             'pypi_url': f"https://pypi.org/project/{component['pypi']}/" if component.get('pypi') else None,
-            'status_override': component.get('status_override', None)
+            'github_exists': False,
+            'pypi_exists': False
         }
         
-        # Fetch GitHub stats
+        # Fetch GitHub stats if URL provided
         if component.get('github'):
             parsed = parse_github_url(component['github'])
             if parsed:
@@ -260,74 +212,40 @@ def update_readme():
                 github_stats = fetch_github_stats(owner, repo)
                 if github_stats:
                     stats['github_exists'] = github_stats.get('exists', False)
-                    stats['open_issues'] = github_stats.get('open_issues', 0)
-                    stats['closed_issues'] = github_stats.get('closed_issues', 0)
-                    stats['total_issues'] = github_stats.get('total_issues', 0)
-                    stats['version'] = github_stats.get('latest_version', '0.0.0')
-                    
-                    # Calculate completion
-                    # Don't override if we have a manual completion set
-                    if component.get('completion_override') is None:
-                        if stats['total_issues'] > 0:
-                            stats['completion'] = calculate_completion(stats['closed_issues'], stats['total_issues'])
-                        elif stats['github_exists'] and stats['version'] != '0.0.0':
-                            # If repo exists with a release version but no issues, it's likely complete
-                            stats['completion'] = 100.0
-                        elif stats['github_exists']:
-                            # If repo exists but no version/issues yet, consider it as initial stage
-                            stats['completion'] = 10.0
-                    
-                    total_open += stats['open_issues']
-                    total_closed += stats['closed_issues']
+                    if not component.get('version_override'):
+                        stats['version'] = github_stats.get('latest_version', '0.0.0')
         
         # Fetch PyPI stats if applicable
         if component.get('pypi'):
             pypi_stats = fetch_pypi_stats(component['pypi'])
             if pypi_stats:
                 stats['pypi_exists'] = pypi_stats.get('exists', False)
-                if pypi_stats.get('version', '0.0.0') != '0.0.0':
+                if pypi_stats.get('version', '0.0.0') != '0.0.0' and not component.get('version_override'):
                     stats['version'] = pypi_stats['version']
-                    # If package exists on PyPI with a version, consider it complete
-                    if stats['completion'] == 0.0 and stats['pypi_exists']:
-                        stats['completion'] = 100.0
         
-        # Handle manual status overrides for private/complete/functional components
-        if stats['status_override'] == 'complete':
-            # Use completion_override if specified, otherwise 100%
-            stats['completion'] = component.get('completion_override', 100.0)
-            stats['github_exists'] = True  # Mark as existing even if private
-            # Also use version_override if specified
-            if component.get('version_override'):
-                stats['version'] = component['version_override']
-        elif stats['status_override'] == 'functional':
-            # Use completion_override if specified, otherwise default to 80%
-            stats['completion'] = component.get('completion_override', 80.0)
-            stats['github_exists'] = True  # Mark as existing
-            # Also use version_override if specified
-            if component.get('version_override'):
-                stats['version'] = component['version_override']
-        
-        # Count ready components (version > 0.0.0 or exists or marked complete/functional)
-        if stats['version'] != '0.0.0' or stats['github_exists'] or stats['status_override'] in ['complete', 'functional']:
-            total_components_ready += 1
+        # Count ready vs development
+        if stats['status'] == 'ready':
+            total_ready += 1
+        else:
+            total_dev += 1
         
         component_stats.append(stats)
     
     # Calculate overall project completion
-    overall_completion = (total_components_ready / len(components)) * 100
+    overall_completion = (total_ready / len(components)) * 100
     
-    # Build the new README content
-    readme_content = """# 🛡️ Copycat Code Defender
+    # Build the new README content - Simplified format
+    readme_content = """# Copycat Code Defender
 
-> **Comprehensive code similarity detection and license compliance platform**
+> **Enterprise OSS Compliance Platform - Comprehensive code similarity detection and license compliance for modern software development**
 
-## 📊 Project Overview
+## Project Overview
 
 <div align="center">
 
 ### Overall Project Completion
 
-**{:.1f}%** Complete {} **{}/{}** Components Ready
+**{:.0f}%** Complete | **{}/{}** Components Ready
 
 {}
 
@@ -335,159 +253,106 @@ def update_readme():
 
 ---
 
-## 🔄 Analysis Workflow
+## Component Status Dashboard
 
-The platform orchestrates a comprehensive analysis pipeline:
+*Last updated: {}*
 
-```mermaid
-graph LR
-    A[User submits PURL] --> B[Backend Queue]
-    B --> C[PURL2Src<br/>Download Source]
-    C --> D[Code Miner<br/>Extract Patterns]
-    C --> E[Binary Sniffer<br/>Scan Binaries]
-    C --> F[Agentic Framework<br/>Intelligent Analysis]
-    D --> G[LiLY<br/>License Detection]
-    E --> G
-    F --> G
-    G --> H[PURL2Notice<br/>Generate Legal Docs]
-    H --> I[Results to Frontend]
-```
-
-1. **User Input**: Submit Package URL through web interface
-2. **Source Retrieval**: Download complete source code
-3. **Pattern Analysis**: Extract code patterns and signatures
-4. **Binary Scanning**: Identify hidden OSS in compiled files
-5. **Intelligent Analysis**: Apply agentic framework for advanced detection
-6. **License Detection**: Classify and validate licenses
-7. **Notice Generation**: Create comprehensive legal documentation
-
----
-
-## 🎯 Component Status Dashboard
-
-*Last updated: {} UTC*
-
-| Component | Version | License | Status | Progress | Open Tickets | Links |
-|-----------|---------|---------|--------|----------|--------------|-------|
+| Component | Version | License | Status | Links |
+|-----------|---------|---------|--------|-------|
 """.format(
         overall_completion,
-        get_status_badge(overall_completion),
-        total_components_ready,
+        total_ready,
         len(components),
-        get_progress_bar(overall_completion, 30),
-        datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')
+        get_progress_bar(overall_completion),
+        datetime.now(timezone.utc).strftime('%Y-%m-%d')
     )
     
     # Add each component to the table
     for stats in component_stats:
-        # Component is ready if it has a version, is marked complete/functional, or has high completion
-        is_ready = (stats['version'] != '0.0.0' or 
-                   stats.get('status_override') in ['complete', 'functional'] or 
-                   stats['completion'] >= 80.0)
-        status_icon = "✅" if is_ready else "🚧"
-        progress_bar = get_progress_bar(stats['completion'], 10)
+        status_icon = "✅ Ready" if stats['status'] == 'ready' else "🚧 Development"
         
         links = []
-        if stats.get('status_override') == 'complete' and not stats['github_url']:
+        if stats['name'] == 'Code Miner':
             links.append("Private Repo")
-        elif stats['github_url']:
-            if stats['github_exists']:
-                links.append(f"[GitHub]({stats['github_url']})")
-            else:
-                links.append("GitHub (planned)")
-        if stats['pypi_url']:
-            if stats['pypi_exists']:
-                links.append(f"[PyPI]({stats['pypi_url']})")
-            else:
-                links.append("PyPI (planned)")
+        else:
+            if stats['github_url']:
+                if stats['github_exists']:
+                    links.append(f"[GitHub]({stats['github_url']})")
+                else:
+                    links.append("GitHub (planned)")
+            if stats['pypi_url']:
+                if stats['pypi_exists']:
+                    links.append(f"[PyPI]({stats['pypi_url']})")
         
-        readme_content += "| **{}**<br/>*{}* | {} | {} | {} | {} {:.0f}% | {} | {} |\n".format(
+        readme_content += "| **{}**<br/>*{}* | {} | {} | {} | {} |\n".format(
             stats['name'],
             stats['description'],
             stats['version'],
             stats['license'],
             status_icon,
-            progress_bar,
-            stats['completion'],
-            stats['open_issues'] if stats['open_issues'] > 0 else '-',
-            ' · '.join(links) if links else 'TBD'
+            ' · '.join(links) if links else 'GitHub (planned)'
         )
     
-    # Add detailed component information
+    # Add platform capabilities section
     readme_content += """
+---
+
+## Platform Capabilities
+
+### ✅ Available Features
+
+- **Package Download Engine** - Automated source retrieval from PURL (npm, PyPI, Maven, Go, Cargo)
+- **Code Pattern Mining** - Advanced signature extraction and semantic analysis algorithms
+- **Binary Component Scanner** - Detection of embedded OSS components in compiled binaries
+- **License Detection System** - Identification of 700+ SPDX licenses with confidence scoring
+- **AI-Powered Analysis** - Intelligent pattern recognition using agentic framework
+- **Metadata Extraction** - Universal parser supporting 13 package ecosystems
+- **Source Identification** - Package coordinate mapping using SWHIDs and fingerprinting
+
+### 🚧 In Development
+
+- **Web Management Interface** - Enterprise dashboard for scan submission and monitoring
+- **RESTful API** - Programmatic access with authentication and rate limiting
+- **Automated Notice Generation** - Legal document creation with attribution requirements
+- **Batch Processing Pipeline** - Concurrent analysis of multiple packages with queue management
+- **Compliance Dashboard** - Real-time metrics, trends, and risk assessment reports
+- **CI/CD Integration** - Native plugins for Jenkins, GitLab, GitHub Actions
 
 ---
 
-## 📋 Component Details
-
-"""
-    
-    # Group components by category
-    categories = {}
-    for stats in component_stats:
-        category = stats.get('category', 'Core')
-        if category not in categories:
-            categories[category] = []
-        categories[category].append(stats)
-    
-    # Display components grouped by category
-    for category in ['Web Platform', 'Analysis Pipeline', 'License Analysis']:
-        if category in categories:
-            readme_content += f"### 🏗️ {category}\n\n"
-            for stats in categories[category]:
-                status_emoji = get_status_badge(stats['completion'])
-                readme_content += f"#### {status_emoji} {stats['name']} (`{stats['component_id']}`)\n\n"
-                readme_content += f"> {stats['description']}\n\n"
-                
-                if stats['github_exists'] or stats['pypi_exists'] or stats.get('status_override') in ['complete', 'functional']:
-                    readme_content += "| Metric | Value |\n"
-                    readme_content += "|--------|-------|\n"
-                    readme_content += f"| **Current Version** | {stats['version']} |\n"
-                    readme_content += f"| **License** | {stats['license']} |\n"
-                    readme_content += f"| **Completion** | {stats['completion']:.1f}% |\n"
-                    readme_content += f"| **Open Issues** | {stats['open_issues']} |\n"
-                    readme_content += f"| **Closed Issues** | {stats['closed_issues']} |\n"
-                    readme_content += f"| **Total Issues** | {stats['total_issues']} |\n\n"
-                else:
-                    readme_content += "*Component not yet initialized*\n\n"
-    
-    # Add summary statistics
-    total_issues = total_open + total_closed
-    issues_completion = calculate_completion(total_closed, total_issues) if total_issues > 0 else 0
-    
-    readme_content += f"""---
-
-## 📈 Summary Statistics
+## Summary Statistics
 
 <div align="center">
 
-| Total Components | Ready | In Development | Total Issues | Resolved | Open |
-|-----------------|-------|----------------|--------------|----------|------|
-| **{len(components)}** | **{total_components_ready}** | **{len(components) - total_components_ready}** | **{total_issues}** | **{total_closed}** | **{total_open}** |
-
-**Issues Resolution Rate:** {issues_completion:.1f}%
+| Total Components | Production Ready | In Development | SPDX Licenses Supported |
+|-----------------|------------------|----------------|-------------------------|
+| **{}** | **{}** | **{}** | **700+** |
 
 </div>
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-Visit each component's repository for specific setup instructions and documentation.
+Visit the [project website](https://copycatcodedefender.com) for more information, or explore individual component repositories for specific setup instructions and documentation.
 
-## 📄 License
+## License
 
-Copyright © 2025 Copycat Code Defender Project
-"""
+Copyright © 2025 Copycat Code Defender | Enterprise OSS Compliance Platform""".format(
+        len(components),
+        total_ready,
+        total_dev
+    )
     
     # Write updated README
     with open('README.md', 'w') as f:
         f.write(readme_content)
     
     print("✅ README.md updated successfully!")
-    print(f"📊 Overall completion: {overall_completion:.1f}%")
-    print(f"🎯 Components ready: {total_components_ready}/{len(components)}")
-    print(f"📝 Total issues: {total_open} open, {total_closed} closed")
+    print(f"📊 Overall completion: {overall_completion:.0f}%")
+    print(f"🎯 Components ready: {total_ready}/{len(components)}")
+    print(f"   - Production Ready: {total_ready}")
+    print(f"   - In Development: {total_dev}")
 
 if __name__ == "__main__":
     update_readme()
