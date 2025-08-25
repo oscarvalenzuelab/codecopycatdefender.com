@@ -96,10 +96,7 @@ def generate_html():
             'pypi': None,
             'description': 'Generates legal notices with licenses and copyright information',
             'category': 'License Analysis', 
-            'license': 'MIT',
-            'status_override': 'complete',
-            'completion_override': 100.0,
-            'version_override': '1.0.0'
+            'license': 'MIT'
         },
         {
             'name': 'UPMEX',
