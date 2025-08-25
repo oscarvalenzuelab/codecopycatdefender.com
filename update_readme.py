@@ -229,6 +229,14 @@ def update_readme():
             'license': 'AGPL-3.0',
             'status': 'ready',
             'version_override': '1.1.2'
+        },
+        {
+            'name': 'PURL2Risk',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2risk',
+            'pypi': None,
+            'description': 'Comprehensive risk intelligence including CVEs, business continuity, and OSS health metrics',
+            'license': 'MIT',
+            'status': 'development'
         }
     ]
     

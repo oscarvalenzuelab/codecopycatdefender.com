@@ -121,6 +121,15 @@ def generate_html():
             'status_override': 'complete',
             'completion_override': 100.0,
             'version_override': '1.1.2'
+        },
+        {
+            'name': 'PURL2Risk',
+            'component_id': 'semantic-copycat-purl2risk',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2risk',
+            'pypi': None,
+            'description': 'Comprehensive risk intelligence including CVEs, business continuity, and OSS health metrics',
+            'category': 'Risk Analysis',
+            'license': 'MIT'
         }
     ]
     
