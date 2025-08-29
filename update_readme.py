@@ -41,12 +41,52 @@ def fetch_github_stats(owner: str, repo: str) -> Optional[Dict]:
             # No releases yet
             pass
         
+        # Fetch issues info
+        open_issues = 0
+        closed_issues = 0
+        total_issues = 0
+        try:
+            # Fetch open issues count
+            open_req = urllib.request.Request(f"{base_url}/issues?state=open&per_page=1", headers=headers)
+            with urllib.request.urlopen(open_req) as response:
+                # Get the total count from the Link header if available
+                link_header = response.headers.get('Link', '')
+                if 'last' in link_header:
+                    # Parse the last page number to get total count
+                    match = re.search(r'page=(\d+)>; rel="last"', link_header)
+                    if match:
+                        open_issues = int(match.group(1))
+                else:
+                    # If no pagination, count the actual issues
+                    open_data = json.loads(response.read().decode())
+                    open_issues = len(open_data)
+            
+            # Fetch closed issues count
+            closed_req = urllib.request.Request(f"{base_url}/issues?state=closed&per_page=1", headers=headers)
+            with urllib.request.urlopen(closed_req) as response:
+                link_header = response.headers.get('Link', '')
+                if 'last' in link_header:
+                    match = re.search(r'page=(\d+)>; rel="last"', link_header)
+                    if match:
+                        closed_issues = int(match.group(1))
+                else:
+                    closed_data = json.loads(response.read().decode())
+                    closed_issues = len(closed_data)
+            
+            total_issues = open_issues + closed_issues
+        except:
+            # Issues API might not be available or accessible
+            pass
+        
         return {
             'exists': True,
             'latest_version': latest_version,
             'updated_at': data.get('updated_at', 'N/A'),
             'created_at': data.get('created_at', 'N/A'),
-            'default_branch': data.get('default_branch', 'main')
+            'default_branch': data.get('default_branch', 'main'),
+            'open_issues': open_issues,
+            'closed_issues': closed_issues,
+            'total_issues': total_issues
         }
     except urllib.error.HTTPError as e:
         if e.code == 404:
@@ -189,6 +229,14 @@ def update_readme():
             'license': 'AGPL-3.0',
             'status': 'ready',
             'version_override': '1.1.2'
+        },
+        {
+            'name': 'PURL2Risk',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2risk',
+            'pypi': None,
+            'description': 'Comprehensive risk intelligence including CVEs, business continuity, and OSS health metrics',
+            'license': 'MIT',
+            'status': 'development'
         }
     ]
     

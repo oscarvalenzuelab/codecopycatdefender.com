@@ -78,13 +78,16 @@ def generate_html():
             'version_override': '1.1.0'
         },
         {
-            'name': 'LiLY Inspector',
-            'component_id': 'semantic-copycat-lily',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-lily',
-            'pypi': None,
-            'description': 'Advanced license detection and classification engine',
+            'name': 'OSLiLi Inspector',
+            'component_id': 'semantic-copycat-oslili',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
+            'pypi': 'semantic-copycat-oslili',
+            'description': 'High-performance license detection across 700+ SPDX identifiers with confidence scores',
             'category': 'License Analysis',
-            'license': 'MIT'
+            'license': 'Apache-2.0',
+            'status_override': 'complete',
+            'completion_override': 100.0,
+            'version_override': '1.2.6'
         },
         {
             'name': 'PURL to Notice',
@@ -93,21 +96,7 @@ def generate_html():
             'pypi': None,
             'description': 'Generates legal notices with licenses and copyright information',
             'category': 'License Analysis', 
-            'license': 'MIT',
-            'status_override': 'complete',
-            'completion_override': 100.0,
-            'version_override': '1.0.0'
-        },
-        {
-            'name': 'OSLiLi Inspector',
-            'component_id': 'semantic-copycat-oslili',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
-            'pypi': 'semantic-copycat-oslili',
-            'description': 'High-performance license detection across 700+ SPDX identifiers',
-            'category': 'License Analysis',
-            'license': 'Apache-2.0',
-            'status_override': 'complete',
-            'version_override': '1.2.6'
+            'license': 'MIT'
         },
         {
             'name': 'UPMEX',
@@ -118,6 +107,7 @@ def generate_html():
             'category': 'Analysis Pipeline',
             'license': 'MIT',
             'status_override': 'complete',
+            'completion_override': 100.0,
             'version_override': '1.5.0'
         },
         {
@@ -125,11 +115,21 @@ def generate_html():
             'component_id': 'semantic-copycat-src2id',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-src2id',
             'pypi': 'semantic-copycat-src2id',
-            'description': 'Identifies package coordinates from source code using SWHIDs',
+            'description': 'Identifies package coordinates from source code using SWHIDs and multiple strategies',
             'category': 'Analysis Pipeline',
             'license': 'AGPL-3.0',
             'status_override': 'complete',
+            'completion_override': 100.0,
             'version_override': '1.1.2'
+        },
+        {
+            'name': 'PURL2Risk',
+            'component_id': 'semantic-copycat-purl2risk',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2risk',
+            'pypi': None,
+            'description': 'Comprehensive risk intelligence including CVEs, business continuity, and OSS health metrics',
+            'category': 'Risk Analysis',
+            'license': 'MIT'
         }
     ]
     
