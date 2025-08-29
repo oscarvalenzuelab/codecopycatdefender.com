@@ -78,7 +78,7 @@ def generate_html():
             'version_override': '1.1.0'
         },
         {
-            'name': 'OSLiLi Inspector',
+            'name': 'OS License Identification Library',
             'component_id': 'semantic-copycat-oslili',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
             'pypi': 'semantic-copycat-oslili',

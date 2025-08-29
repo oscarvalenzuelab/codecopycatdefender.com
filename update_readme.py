@@ -196,7 +196,7 @@ def update_readme():
             'version_override': '1.1.0'
         },
         {
-            'name': 'OSLiLi Inspector',
+            'name': 'OS License Identification Library',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
             'pypi': 'semantic-copycat-oslili',
             'description': 'High-performance license detection across 700+ SPDX identifiers with confidence scores',
