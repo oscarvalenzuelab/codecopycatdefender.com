@@ -86,6 +86,12 @@ def parse_github_url(url: str) -> Optional[tuple]:
         return match.group(1), match.group(2)
     return None
 
+def calculate_completion(closed_issues: int, total_issues: int) -> float:
+    """Calculate completion percentage based on closed vs total issues"""
+    if total_issues == 0:
+        return 0.0
+    return (closed_issues / total_issues) * 100
+
 def get_progress_bar(percentage: float, width: int = 50) -> str:
     """Create a visual progress bar"""
     filled = int((percentage / 100) * width)
@@ -127,7 +133,7 @@ def update_readme():
             'github': None,  # Private repository
             'pypi': None,
             'description': 'Extracts code patterns and performs initial license detection using semantic analysis',
-            'license': 'Proprietary',
+            'license': 'Private Beta',
             'status': 'ready',
             'version_override': '1.7.0'
         },
@@ -176,7 +182,7 @@ def update_readme():
             'version_override': '1.5.0'
         },
         {
-            'name': 'Src2ID',
+            'name': 'Source To ID',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-src2id',
             'pypi': 'semantic-copycat-src2id',
             'description': 'Identifies package coordinates from source code using SWHIDs and multiple strategies',

@@ -54,7 +54,7 @@ def generate_html():
             'category': 'Analysis Pipeline',
             'status_override': 'complete',
             'version_override': '1.7.0',
-            'license': 'Proprietary'
+            'license': 'Private Beta'
         },
         {
             'name': 'Binary Sniffer',
@@ -97,6 +97,39 @@ def generate_html():
             'status_override': 'complete',
             'completion_override': 100.0,
             'version_override': '1.0.0'
+        },
+        {
+            'name': 'OSLiLi Inspector',
+            'component_id': 'semantic-copycat-oslili',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
+            'pypi': 'semantic-copycat-oslili',
+            'description': 'High-performance license detection across 700+ SPDX identifiers',
+            'category': 'License Analysis',
+            'license': 'Apache-2.0',
+            'status_override': 'complete',
+            'version_override': '1.2.6'
+        },
+        {
+            'name': 'UPMEX',
+            'component_id': 'semantic-copycat-upmex',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-upmex',
+            'pypi': 'semantic-copycat-upmex',
+            'description': 'Universal package metadata extractor supporting 13 package ecosystems',
+            'category': 'Analysis Pipeline',
+            'license': 'MIT',
+            'status_override': 'complete',
+            'version_override': '1.5.0'
+        },
+        {
+            'name': 'Source To ID',
+            'component_id': 'semantic-copycat-src2id',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-src2id',
+            'pypi': 'semantic-copycat-src2id',
+            'description': 'Identifies package coordinates from source code using SWHIDs',
+            'category': 'Analysis Pipeline',
+            'license': 'AGPL-3.0',
+            'status_override': 'complete',
+            'version_override': '1.1.2'
         }
     ]
     

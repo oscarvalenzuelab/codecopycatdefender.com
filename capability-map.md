@@ -17,7 +17,7 @@ graph TB
     subgraph "Core Analysis Engine"
         MINER[Code Miner<br/>Pattern Extraction]
         BINARY[Binary Sniffer<br/>Binary Analysis]
-        SRC2ID[Src2ID<br/>Source Identification]
+        SRC2ID[Source To ID<br/>Source Identification]
         AGENT[Open Agentic Framework<br/>AI Analysis]
     end
 
@@ -96,7 +96,7 @@ sequenceDiagram
         and
         PURL2Src->>Analyzers: UPMEX
         and
-        PURL2Src->>Analyzers: Src2ID
+        PURL2Src->>Analyzers: Source To ID
     end
     
     Analyzers->>Analyzers: Agentic Framework
@@ -201,7 +201,7 @@ graph LR
 | **OSLiLi Inspector** | ✅ Ready | • 700+ SPDX licenses<br/>• Confidence scoring<br/>• Multi-method detection<br/>• Evidence collection |
 | **PURL to Notice** | 🚧 Development | • Legal notice generation<br/>• Attribution formatting<br/>• License text inclusion<br/>• Compliance documentation |
 | **UPMEX** | ✅ Ready | • Universal metadata parsing<br/>• 13 ecosystems support<br/>• Dependency extraction<br/>• SBOM data collection |
-| **Src2ID** | ✅ Ready | • SWHID generation<br/>• Package identification<br/>• Web search integration<br/>• SCANOSS fingerprinting |
+| **Source To ID** | ✅ Ready | • SWHID generation<br/>• Package identification<br/>• Web search integration<br/>• SCANOSS fingerprinting |
 
 ## Technology Stack
 
