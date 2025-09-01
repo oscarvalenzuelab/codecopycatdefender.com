@@ -2,7 +2,7 @@
 
 # Setup script to install Git hooks for the project
 
-echo "🔧 Setting up Git hooks for Copycat Code Defender..."
+echo "🔧 Setting up Git hooks for Code Copycat Defender..."
 
 # Create hooks directory if it doesn't exist
 mkdir -p .git/hooks

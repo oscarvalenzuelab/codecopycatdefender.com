@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Update README.md with Copycat Code Defender component status
+Update README.md with Code Copycat Defender component status
 """
 import json
 import os
@@ -141,7 +141,7 @@ def get_progress_bar(percentage: float, width: int = 50) -> str:
 def update_readme():
     """Main function to update README with latest stats"""
     
-    # Define all components of Copycat Code Defender - Updated list
+    # Define all components of Code Copycat Defender - Updated list
     components = [
         {
             'name': 'Frontend UI',
@@ -289,7 +289,7 @@ def update_readme():
     overall_completion = (total_ready / len(components)) * 100
     
     # Build the new README content - Simplified format
-    readme_content = """# Copycat Code Defender
+    readme_content = """# Code Copycat Defender
 
 > **Enterprise OSS Compliance Platform - Comprehensive code similarity detection and license compliance for modern software development**
 
@@ -392,7 +392,7 @@ Visit the [project website](https://copycatcodedefender.com) for more informatio
 
 ## License
 
-Copyright © 2025 Copycat Code Defender | Enterprise OSS Compliance Platform""".format(
+Copyright © 2025 Code Copycat Defender | Enterprise OSS Compliance Platform""".format(
         len(components),
         total_ready,
         total_dev

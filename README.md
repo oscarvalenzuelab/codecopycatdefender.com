@@ -1,4 +1,4 @@
-# Copycat Code Defender
+# Code Copycat Defender
 
 > **Enterprise OSS Compliance Platform - Comprehensive code similarity detection and license compliance for modern software development**
 
@@ -77,4 +77,4 @@ Visit the [project website](https://copycatcodedefender.com) for more informatio
 
 ## License
 
-Copyright © 2025 Copycat Code Defender | Enterprise OSS Compliance Platform
+Copyright © 2025 Code Copycat Defender | Enterprise OSS Compliance Platform

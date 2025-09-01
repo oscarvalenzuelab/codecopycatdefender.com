@@ -1,4 +1,4 @@
-# Copycat Code Defender - Capability Map
+# Code Copycat Defender - Capability Map
 
 ## System Architecture Diagram
 
