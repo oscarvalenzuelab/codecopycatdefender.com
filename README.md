@@ -2,6 +2,7 @@
 
 > **Enterprise OSS Compliance Platform - Comprehensive code similarity detection and license compliance for modern software development**
 
+
 ## Project Overview
 
 <div align="center">
