@@ -24,6 +24,7 @@ graph TB
     subgraph "License & Compliance"
         OSLILI[OS License Identification Library<br/>License Detection]
         NOTICE[PURL to Notice<br/>Legal Docs Generator]
+        CCDA[CCDA<br/>Advisory Generator]
     end
 
     subgraph "Data Storage"
@@ -48,9 +49,12 @@ graph TB
     SRC2ID --> AGENT
     
     AGENT --> OSLILI
+    AGENT --> CCDA
     OSLILI --> NOTICE
+    OSLILI --> CCDA
     
     NOTICE --> DB
+    CCDA --> DB
     DB --> API
     CACHE --> PURL
 
@@ -200,6 +204,7 @@ graph LR
 | **Agentic Framework** | ✅ Ready | • AI-powered analysis<br/>• Pattern learning<br/>• Risk scoring<br/>• Intelligent classification |
 | **OS License Identification Library** | ✅ Ready | • 700+ SPDX licenses<br/>• Confidence scoring<br/>• Multi-method detection<br/>• Evidence collection |
 | **PURL to Notice** | 🚧 Development | • Legal notice generation<br/>• Attribution formatting<br/>• License text inclusion<br/>• Compliance documentation |
+| **CCDA** | 🚧 Development | • Advisory generation<br/>• Semantic clone detection<br/>• Typosquatting detection<br/>• Risk assessment |
 | **UPMEX** | ✅ Ready | • Universal metadata parsing<br/>• 13 ecosystems support<br/>• Dependency extraction<br/>• SBOM data collection |
 | **Source To ID** | ✅ Ready | • SWHID generation<br/>• Package identification<br/>• Web search integration<br/>• SCANOSS fingerprinting |
 

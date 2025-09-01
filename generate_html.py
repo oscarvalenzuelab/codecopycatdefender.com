@@ -99,6 +99,15 @@ def generate_html():
             'license': 'MIT'
         },
         {
+            'name': 'CCDA',
+            'component_id': 'semantic-copycat-ccda',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-ccda',
+            'pypi': None,
+            'description': 'Code Copycat Defender Advisory - Evolution of OSSA Scanner for semantic code copycat detection and advisory generation',
+            'category': 'License Analysis',
+            'license': 'MIT'
+        },
+        {
             'name': 'UPMEX',
             'component_id': 'semantic-copycat-upmex',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-upmex',

@@ -213,6 +213,14 @@ def update_readme():
             'status': 'development'
         },
         {
+            'name': 'CCDA',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-ccda',
+            'pypi': None,
+            'description': 'Code Copycat Defender Advisory - Evolution of OSSA Scanner for semantic code copycat detection',
+            'license': 'MIT',
+            'status': 'development'
+        },
+        {
             'name': 'UPMEX',
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-upmex',
             'pypi': 'semantic-copycat-upmex',
