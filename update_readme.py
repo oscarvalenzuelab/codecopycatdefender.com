@@ -206,11 +206,12 @@ def update_readme():
         },
         {
             'name': 'PURL to Notice',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice',
-            'pypi': None,
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
+            'pypi': 'semantic-copycat-purl2notices',
             'description': 'Generates legal notices with licenses and copyright information for compliance',
             'license': 'MIT',
-            'status': 'development'
+            'status': 'ready',
+            'version_override': '1.1.3'
         },
         {
             'name': 'CCDA',
