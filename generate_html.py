@@ -92,11 +92,14 @@ def generate_html():
         {
             'name': 'PURL to Notice',
             'component_id': 'semantic-copycat-purl2notice',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notice',
-            'pypi': None,
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
+            'pypi': 'semantic-copycat-purl2notices',
             'description': 'Generates legal notices with licenses and copyright information',
             'category': 'License Analysis', 
-            'license': 'MIT'
+            'license': 'MIT',
+            'status_override': 'complete',
+            'completion_override': 100.0,
+            'version_override': '1.1.3'
         },
         {
             'name': 'CCDA',
