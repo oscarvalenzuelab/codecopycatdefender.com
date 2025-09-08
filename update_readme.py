@@ -206,7 +206,7 @@ def update_readme():
         },
         {
             'name': 'PURL to Notice',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notices',
             'pypi': 'semantic-copycat-purl2notices',
             'description': 'Generates legal notices with licenses and copyright information for compliance',
             'license': 'MIT',

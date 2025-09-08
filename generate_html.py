@@ -92,7 +92,7 @@ def generate_html():
         {
             'name': 'PURL to Notice',
             'component_id': 'semantic-copycat-purl2notice',
-            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-oslili',
+            'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notices',
             'pypi': 'semantic-copycat-purl2notices',
             'description': 'Generates legal notices with licenses and copyright information',
             'category': 'License Analysis', 
