@@ -43,7 +43,10 @@ def generate_html():
             'pypi': 'semantic-copycat-purl2src',
             'description': 'Downloads source code from Package URLs (npm, PyPI, Maven, etc.)',
             'category': 'Analysis Pipeline',
-            'license': 'MIT'
+            'license': 'MIT',
+            'status_override': 'complete',
+            'completion_override': 100.0,
+            'version_override': '1.1.2'
         },
         {
             'name': 'Code Miner',
@@ -63,7 +66,10 @@ def generate_html():
             'pypi': 'semantic-copycat-binarysniffer',
             'description': 'Identifies hidden OSS components embedded in binary files',
             'category': 'Analysis Pipeline',
-            'license': 'MIT'
+            'license': 'MIT',
+            'status_override': 'complete',
+            'completion_override': 100.0,
+            'version_override': '1.10.5'
         },
         {
             'name': 'Open Agentic Framework',
@@ -87,7 +93,7 @@ def generate_html():
             'license': 'Apache-2.0',
             'status_override': 'complete',
             'completion_override': 100.0,
-            'version_override': '1.2.6'
+            'version_override': '1.5.1'
         },
         {
             'name': 'PURL to Notice',
@@ -95,11 +101,11 @@ def generate_html():
             'github': 'https://github.com/oscarvalenzuelab/semantic-copycat-purl2notices',
             'pypi': 'semantic-copycat-purl2notices',
             'description': 'Generates legal notices with licenses and copyright information',
-            'category': 'License Analysis', 
+            'category': 'License Analysis',
             'license': 'MIT',
             'status_override': 'complete',
             'completion_override': 100.0,
-            'version_override': '1.1.3'
+            'version_override': '1.2.0'
         },
         {
             'name': 'CCDA',
@@ -120,7 +126,7 @@ def generate_html():
             'license': 'MIT',
             'status_override': 'complete',
             'completion_override': 100.0,
-            'version_override': '1.5.0'
+            'version_override': '1.6.2'
         },
         {
             'name': 'Source To ID',
@@ -132,7 +138,7 @@ def generate_html():
             'license': 'AGPL-3.0',
             'status_override': 'complete',
             'completion_override': 100.0,
-            'version_override': '1.1.2'
+            'version_override': '1.3.1'
         },
         {
             'name': 'PURL2Risk',
